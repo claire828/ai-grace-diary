@@ -8,7 +8,7 @@
         <button class="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors">
           <i data-fa-i2svg=""
             ><svg
-              class="svg-inline--fa fa-play"
+              class="svg-inline--fa fa-play w-4 h-4"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -27,7 +27,7 @@
         <button class="bg-gray-600 text-white p-3 rounded-full hover:bg-gray-700 transition-colors">
           <i data-fa-i2svg=""
             ><svg
-              class="svg-inline--fa fa-stop"
+              class="svg-inline--fa fa-stop w-4 h-4"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -46,7 +46,7 @@
         <button class="bg-gray-600 text-white p-3 rounded-full hover:bg-gray-700 transition-colors">
           <i data-fa-i2svg=""
             ><svg
-              class="svg-inline--fa fa-pause"
+              class="svg-inline--fa fa-pause w-4 h-4"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -72,7 +72,7 @@
       <div class="flex items-center text-sm text-gray-600">
         <i class="mr-2" data-fa-i2svg=""
           ><svg
-            class="svg-inline--fa fa-volume-high"
+            class="svg-inline--fa fa-volume-high w-4 h-4"
             aria-hidden="true"
             focusable="false"
             data-prefix="fas"

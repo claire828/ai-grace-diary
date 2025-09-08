@@ -13,7 +13,7 @@
         <li class="flex items-start">
           <i class="text-orange-500 text-xs mt-2 mr-2" data-fa-i2svg=""
             ><svg
-              class="svg-inline--fa fa-circle"
+              class="svg-inline--fa fa-circle w-2 h-2"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -33,7 +33,7 @@
         <li class="flex items-start">
           <i class="text-orange-500 text-xs mt-2 mr-2" data-fa-i2svg=""
             ><svg
-              class="svg-inline--fa fa-circle"
+              class="svg-inline--fa fa-circle w-2 h-2"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -53,7 +53,7 @@
         <li class="flex items-start">
           <i class="text-orange-500 text-xs mt-2 mr-2" data-fa-i2svg=""
             ><svg
-              class="svg-inline--fa fa-circle"
+              class="svg-inline--fa fa-circle w-2 h-2"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"

@@ -1,4 +1,4 @@
-import HomePage from '@/home/HomePage.vue'
+import DiaryLobby from '@/components/DiaryLobby.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,15 +6,20 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomePage,
+      component: DiaryLobby,
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/history',
+      name: 'history',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      component: () => import('../components/DiaryHistory.vue'),
+    },
+    {
+      path: '/report',
+      name: 'report',
+      component: () => import('../components/DiaryReport.vue'),
     },
   ],
 })
