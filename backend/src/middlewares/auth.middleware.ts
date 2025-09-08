@@ -1,9 +1,9 @@
-import { NextFunction, Response } from 'express';
-import { verify } from 'jsonwebtoken';
 import { SECRET_KEY } from '@config';
 import pg from '@database';
 import { HttpException } from '@exceptions/httpException';
 import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
+import { NextFunction, Response } from 'express';
+import { verify } from 'jsonwebtoken';
 
 const getAuthorization = req => {
   const coockie = req.cookies['Authorization'];
@@ -21,7 +21,8 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
 
     if (Authorization) {
       const { id } = (await verify(Authorization, SECRET_KEY)) as DataStoredInToken;
-      const { rows, rowCount } = await pg.query(`
+      const { rows, rowCount } = await pg.query(
+        `
         SELECT
           "email",
           "password"
@@ -29,10 +30,12 @@ export const AuthMiddleware = async (req: RequestWithUser, res: Response, next: 
           users
         WHERE
           "id" = $1
-      `, id);
+      `,
+        [id],
+      );
 
-      if (rowCount) {
-        req.user = rows[0];
+      if (rowCount && rows.length > 0) {
+        req.user = rows[0] as any; // Optionally, cast to User if you have the type imported
         next();
       } else {
         next(new HttpException(401, 'Wrong authentication token'));
