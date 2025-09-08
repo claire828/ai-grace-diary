@@ -4,8 +4,6 @@ import DiaryTranslation from '@/components/DiaryTranslation.vue'
 import GratitudeBoard from '@/components/GratitudeBoard.vue'
 import KeySummary from '@/components/KeySummary.vue'
 import TTSControl from '@/components/TTSControl.vue'
-
-export type DiaryStatus = 'empty' | 'draft' | 'published' | 'archived'
 </script>
 
 <template>

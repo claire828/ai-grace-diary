@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import IconAnalyze from '@/components/icons/IconAnalyze.vue'
-import { ref } from 'vue'
-import IconEditable from './icons/IconEditable.vue'
+import type { DiaryStatus } from '@/types/diary.type'
+import { computed, ref } from 'vue'
 import IconLightbulb from './icons/IconLightbulb.vue'
-const wordsMax = 2000
+const wordsMax = 4000
 const diaryRef = ref('')
+const defaultDiaryPlaceHolder = `Today I felt... I accomplished... I learned... I'm grateful for...
+
+What made me smile today?
+What challenged me?
+What am I looking forward to tomorrow?`
+
+const props = defineProps<{
+  diaryStatus: DiaryStatus
+}>()
+
+const placeholder = computed(() => (props.diaryStatus === 'draft' ? defaultDiaryPlaceHolder : ''))
 
 // const today = new Date().toLocaleDateString('en-US', {
 //   year: 'numeric',
@@ -43,24 +53,15 @@ function write() {
         </p>
       </div>
 
-      <section id="status-indicator" class="flex items-center space-x-3 p-4">
-        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-        <span class="text-sm font-medium text-green-700">Editable - Ready for your thoughts</span>
-        <IconEditable />
-      </section>
       <!-- <span class="text-sm text-gray-500">{{ today }} </span> -->
     </div>
 
     <!-- text area-->
     <textarea
       v-model="diaryRef"
-      maxlength="wordsMax"
+      :maxlength="wordsMax"
+      :placeholder="placeholder"
       class="w-full h-96 p-6 border-2 border-purple-100 rounded-2xl focus:border-purple-300 focus:outline-none resize-none text-gray-700 leading-relaxed"
-      placeholder="Today I felt... I accomplished... I learned... I'm grateful for...
-
-What made me smile today?
-What challenged me?
-What am I looking forward to tomorrow?"
     ></textarea>
     <!-- bottom-->
     <div class="flex justify-between items-center mt-4">
@@ -71,13 +72,7 @@ What am I looking forward to tomorrow?"
           @click="write"
           class="px-6 py-3 text-gray-500 hover:text-gray-800 transition-colors"
         >
-          Save Draft
-        </button>
-        <button
-          class="flex items-center px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl hover:from-purple-600 hover:to-indigo-600 transition-all transform hover:scale-105 shadow-lg"
-        >
-          <IconAnalyze />
-          Analyze My Day
+          Save
         </button>
       </div>
     </div>
