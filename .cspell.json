@@ -8,6 +8,11 @@
     "vueuse",
     "pinia",
     "rxjs",
-    "analyzed"
+    "analyzed",
+    "sendfile",
+    "keepalive",
+    "initdb",
+    "referer",
+    "postgresdata"
   ]
 }
