@@ -2,8 +2,8 @@
 import { useDiary } from '@/composables/useDiary'
 import { formatEuropean } from '@/utils'
 import DiaryRow from './DiaryRow.vue'
-const { diaries, actions } = useDiary()
-
+const { diaries, fetchDiaries$, actions } = useDiary()
+fetchDiaries$.subscribe()
 const props = defineProps<{
   title: string
 }>()
