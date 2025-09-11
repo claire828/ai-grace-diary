@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 export function useDiary() {
   const diaries = ref<DiaryRemoteModel[]>([])
-  const url = 'http://localhost/diaries/'
+  const url = 'http://localhost/diaries'
   const fetchDiaries$ = fromAjax<{ data: DiaryRemoteModel[] }>({
     url,
   }).pipe(
@@ -31,6 +31,8 @@ export function useDiary() {
     )
 
   const actions = {
+    fetchDiaries: () => fetchDiaries$.subscribe(),
+    addDiary: (content: string) => addDiary$(content).subscribe(),
     deleteDiary: (id: number) => deleteDiary$(id).subscribe(),
     editDiary: (id: number) => console.log('edit diary with id:', id),
     analyzeDiary: (id: number) => console.log('analyze diary with id:', id),
@@ -39,9 +41,5 @@ export function useDiary() {
   return {
     diaries,
     actions,
-    // 如果需要，也可以 export observable
-    fetchDiaries$,
-    addDiary$,
-    deleteDiary$,
   }
 }

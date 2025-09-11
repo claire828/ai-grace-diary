@@ -12,7 +12,6 @@ const router = createRouter({
       path: '/history',
       name: 'history',
       component: () => import('../components/DiaryHistory.vue'),
-      props: { title: 'Your Diaries' },
     },
     {
       path: '/report',
