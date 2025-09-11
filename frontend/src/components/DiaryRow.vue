@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { DiaryStatus, MoodStatus } from '@/types/diary.type'
-import { defineProps } from 'vue'
+import type { DiaryActionType, DiaryStatus, MoodStatus } from '@/types/diary.type'
+import { defineEmits, defineProps } from 'vue'
 import IconChevronRight from './icons/IconChevronRight.vue'
 import IconEditable from './icons/IconEditable.vue'
 import IconTrash from './icons/IconTrash.vue'
@@ -12,10 +12,15 @@ const props = defineProps<{
   status: DiaryStatus
 }>()
 
+const emit = defineEmits<{
+  (e: DiaryActionType): void
+}>()
+
 const canAnalyzed = props.status === 'draft'
 
-function analyze() {
-  console.log('analyze diary entry for date:', props.date)
+function handleAction(event: Event, type: DiaryActionType) {
+  event.stopPropagation()
+  emit(type)
 }
 </script>
 
@@ -32,11 +37,15 @@ function analyze() {
 
     <!-- Buttons Area-->
     <section class="flex items-center space-x-2">
-      <IconTrash class="hover:scale-110 transition-transform" />
-      <IconEditable class="hover:scale-110 transition-transform" />
+      <button @click="handleAction($event, 'delete')" aria-label="Delete diary">
+        <IconTrash class="hover:scale-110 transition-transform" />
+      </button>
+      <button @click="handleAction($event, 'edit')" aria-label="Edit diary">
+        <IconEditable class="hover:scale-110 transition-transform" />
+      </button>
       <div v-if="canAnalyzed" class="flex space-x-2">
         <button
-          @click="analyze"
+          @click="handleAction($event, 'analyze')"
           class="flex cursor-pointer items-center px-3 py-1 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl hover:from-purple-600 hover:to-indigo-600 transition-all transform hover:scale-105 shadow-lg"
         >
           <IconAnalyze />

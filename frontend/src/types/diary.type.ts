@@ -3,3 +3,4 @@ export type DiaryStatus = 'draft' | 'published' | 'analyzed'
 // published -> finish, can analyze, can edit
 // analyzed -> old entries, read-only
 export type MoodStatus = 'Positive' | 'Negative' | 'Neutral' | 'Waiting for Analysis'
+export type DiaryActionType = 'delete' | 'edit' | 'analyze'
