@@ -12,17 +12,23 @@ export interface Diary {
 
 @Service()
 export class DiaryService {
-  // 建立日記
   public async createDiary(content: string): Promise<Diary> {
     // 新增日記預設為 draft
     const { rows } = await pg.query('INSERT INTO diary (content, status) VALUES ($1, $2) RETURNING *', [content, 'draft']);
+    console.log('created diary', rows);
     return rows[0];
   }
 
-  // 取得今天的日記
   public async getTodayDiary(): Promise<Diary | null> {
     const { rows } = await pg.query('SELECT * FROM diary WHERE created_at::date = CURRENT_DATE LIMIT 1');
+    console.log('get diary', rows);
     return rows[0] || null;
+  }
+
+  public async getAllDiaries(): Promise<Diary[]> {
+    const { rows } = await pg.query(`SELECT * FROM diary ORDER BY created_at DESC`);
+    console.log('get all diaries', rows);
+    return rows;
   }
 
   // 編輯日記（僅限未分析）
@@ -37,7 +43,6 @@ export class DiaryService {
     return updated[0];
   }
 
-  // 刪除日記（可選功能）
   public async deleteDiary(diaryId: number): Promise<void> {
     await pg.query('DELETE FROM diary WHERE id = $1', [diaryId]);
   }

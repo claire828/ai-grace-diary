@@ -13,6 +13,7 @@
     "keepalive",
     "initdb",
     "referer",
-    "postgresdata"
+    "postgresdata",
+    "dtos"
   ]
 }

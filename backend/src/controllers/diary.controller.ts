@@ -26,6 +26,15 @@ export class DiaryController {
     }
   };
 
+  public getAllDiaries = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const diaries = await this.diaryService.getAllDiaries();
+      res.status(200).json({ data: diaries, message: 'all diaries' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // 編輯日記
   public updateDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
