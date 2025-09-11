@@ -37,12 +37,18 @@ function handleAction(event: Event, type: DiaryActionType) {
 
     <!-- Buttons Area-->
     <section class="flex items-center space-x-2">
-      <button @click="handleAction($event, 'delete')" aria-label="Delete diary">
-        <IconTrash class="hover:scale-110 transition-transform" />
-      </button>
-      <button @click="handleAction($event, 'edit')" aria-label="Edit diary">
-        <IconEditable class="hover:scale-110 transition-transform" />
-      </button>
+      <IconTrash
+        class="hover:scale-110 transition-transform"
+        @click="handleAction($event, 'delete')"
+        aria-label="Delete diary"
+      />
+
+      <IconEditable
+        class="hover:scale-110 transition-transform"
+        @click="handleAction($event, 'edit')"
+        aria-label="Edit diary"
+      />
+
       <div v-if="canAnalyzed" class="flex space-x-2">
         <button
           @click="handleAction($event, 'analyze')"
