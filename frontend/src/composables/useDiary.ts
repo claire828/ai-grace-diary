@@ -24,6 +24,7 @@ export function useDiary() {
 
   const addDiary$ = (content: string) =>
     fromAjax({ url, method: 'POST', body: { content } }).pipe(
+      switchMap(() => fetchDiaries$),
       catchError((error) => {
         console.error('Add diary request failed:', error)
         throw error
