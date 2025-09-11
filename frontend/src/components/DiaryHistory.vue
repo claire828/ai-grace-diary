@@ -7,6 +7,7 @@ import { ref } from 'vue'
 import DiaryRow from './DiaryRow.vue'
 
 const diaries = ref<DiaryRemoteModel[]>([])
+
 const fetchDiaries$ = fromAjax<{ data: DiaryRemoteModel[] }>({
   url: 'http://localhost/diaries',
 }).pipe(
@@ -14,19 +15,20 @@ const fetchDiaries$ = fromAjax<{ data: DiaryRemoteModel[] }>({
   tap((data) => (diaries.value = data)),
 )
 
+const deleteDiary$ = (id: number) =>
+  fromAjax({ url: 'http://localhost/diaries/' + id, method: 'DELETE' }).pipe(
+    tap((data) => console.log('delete diary with id:', id, data)),
+    switchMap(() => fetchDiaries$),
+    catchError((error) => {
+      console.error('Delete request failed:', error)
+      throw error
+    }),
+  )
+
 fetchDiaries$.subscribe()
 
 function deleteDiary(id: number) {
-  fromAjax({ url: 'http://localhost/diaries/' + id, method: 'DELETE' })
-    .pipe(
-      tap((data) => console.log('delete diary with id:', id, data)),
-      switchMap(() => fetchDiaries$),
-      catchError((error) => {
-        console.error('Delete request failed:', error)
-        throw error
-      }),
-    )
-    .subscribe()
+  deleteDiary$(id).subscribe()
 }
 
 function editDiary(id: number) {
