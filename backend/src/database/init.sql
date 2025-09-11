@@ -1,3 +1,7 @@
+CREATE TYPE status AS ENUM ('draft', 'published', 'analyzed');
+CREATE TYPE mood AS ENUM ('Positive', 'Negative', 'Neutral', 'Waiting for Analysis');
+
+
 -- If Exists Table Drop
 DROP TABLE IF EXISTS diary cascade;
 DROP TABLE IF EXISTS users cascade;
@@ -17,5 +21,6 @@ CREATE TABLE diary (
   id SERIAL PRIMARY KEY,
   content TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW(),
-  status VARCHAR(20) NOT NULL
+  status VARCHAR(20) NOT NULL DEFAULT 'draft',
+  mood mood NOT NULL DEFAULT 'Waiting for Analysis'
 );

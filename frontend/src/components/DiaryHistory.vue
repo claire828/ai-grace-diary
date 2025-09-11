@@ -24,9 +24,9 @@ const props = defineProps<{
         v-for="diary in diaries"
         :key="diary.id"
         :date="formatEuropean(diary.created_at)"
-        :text="diary.content"
-        :diaryStatus="diary.status"
-        :mood-status="'Positive'"
+        :content="diary.content"
+        :status="diary.status"
+        :mood="diary.mood"
       />
     </div>
   </section>

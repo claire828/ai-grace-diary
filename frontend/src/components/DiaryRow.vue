@@ -5,12 +5,12 @@ import IconChevronRight from './icons/IconChevronRight.vue'
 
 const props = defineProps<{
   date: string
-  text: string
-  moodStatus: MoodStatus
-  diaryStatus: DiaryStatus
+  content: string
+  mood: MoodStatus
+  status: DiaryStatus
 }>()
 
-const canAnalyzed = props.diaryStatus === 'published'
+const canAnalyzed = props.status === 'draft'
 
 function analyze() {
   console.log('analyze diary entry for date:', props.date)
@@ -24,7 +24,7 @@ function analyze() {
     <div>
       <h3 class="font-medium text-gray-900">{{ props.date }}</h3>
       <p class="text-sm text-gray-600">
-        {{ props.text }}
+        {{ props.content }}
       </p>
     </div>
     <div class="flex items-center space-x-2">
@@ -46,16 +46,16 @@ function analyze() {
         </button>
       </div>
 
-      <template v-else>
+      <template v-if="props.mood !== 'Waiting for Analysis'">
         <span
           class="px-2 py-1 text-xs rounded-full"
           :class="{
-            'bg-green-100 text-green-800': props.moodStatus === 'Positive',
-            'bg-yellow-100 text-yellow-800': props.moodStatus === 'Neutral',
-            'bg-red-100 text-red-800': props.moodStatus === 'Negative',
+            'bg-green-100 text-green-800': props.mood === 'Positive',
+            'bg-yellow-100 text-yellow-800': props.mood === 'Neutral',
+            'bg-red-100 text-red-800': props.mood === 'Negative',
           }"
         >
-          {{ props.moodStatus }}
+          {{ props.mood }}
         </span>
         <IconChevronRight />
       </template>

@@ -32,8 +32,6 @@ export function formatEuropean(timestamp: string): string {
   const year = date.getFullYear()
   const hours = pad(date.getHours())
   const minutes = pad(date.getMinutes())
-
-  console.log('formatEuropean', timestamp, '==>', `${day} ${month} ${year} ${hours}:${minutes}`)
   return `${day} ${month} ${year} ${hours}:${minutes}`
 }
 

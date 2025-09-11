@@ -3,7 +3,7 @@ import DiaryHistory from './DiaryHistory.vue'
 import DiaryInput from './DiaryInput.vue'
 
 // TODO: 這邊要打ＡＰＩ收資料
-const diaryStatus = 'published'
+const diaryStatus = 'draft'
 const isPublished = ['published', 'analyzed'].includes(diaryStatus)
 </script>
 
