@@ -1,5 +1,9 @@
 {
 	"devDependencies": {
 		"cspell": "^9.2.1"
+	},
+	"dependencies": {
+		"@primeuix/themes": "^1.2.3",
+		"primevue": "^4.3.9"
 	}
 }

@@ -1,22 +1,22 @@
 import type { DiaryRemoteModel } from '@/models'
-import { catchError, map, Subject, switchMap, takeUntil, tap } from 'rxjs'
-import { ajax } from 'rxjs/ajax'
+import { createResource } from '@/utils'
+import { catchError, Subject, switchMap, takeUntil, tap } from 'rxjs'
 import { onUnmounted, ref } from 'vue'
 
 export function useDiary() {
   const destroy$ = new Subject<void>()
   const diaries = ref<DiaryRemoteModel[]>([])
   const url = 'http://localhost/diaries'
-  // factory: create a fresh GET observable each time
+  // use shared resource helper
+  const api = createResource<DiaryRemoteModel>(url)
   const fetchDiaries = () =>
-    ajax.getJSON<{ data: DiaryRemoteModel[] }>(url).pipe(
-      map((response) => response.data as DiaryRemoteModel[]),
+    api.get().pipe(
       tap((data) => (diaries.value = data)),
       takeUntil(destroy$),
     )
 
   const deleteDiary$ = (id: number) =>
-    ajax.delete(`${url}/${id}`).pipe(
+    api.delete(id).pipe(
       tap(() => {
         diaries.value = diaries.value.filter((d) => d.id !== id)
       }),
@@ -28,7 +28,7 @@ export function useDiary() {
     )
 
   const addDiary$ = (content: string) =>
-    ajax.post(url, { content }, { 'Content-Type': 'application/json' }).pipe(
+    api.post({ content }).pipe(
       switchMap(() => fetchDiaries()),
       catchError((error) => {
         console.error('Add diary request failed:', error)
