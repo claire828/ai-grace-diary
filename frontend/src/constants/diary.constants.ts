@@ -12,6 +12,4 @@ What made me smile today?
 What challenged me?
 What am I looking forward to tomorrow?`
 
-export const SAVE_BUTTON_TEXT = 'Save'
-
 export const WORDS_SUFFIX = 'words'

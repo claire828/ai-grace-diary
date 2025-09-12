@@ -16,6 +16,8 @@
     "postgresdata",
     "dtos",
     "primevue",
-    "primeuix"
+    "primeuix",
+    "confirmdialog",
+    "confirmationservice"
   ]
 }

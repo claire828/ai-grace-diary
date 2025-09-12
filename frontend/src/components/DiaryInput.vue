@@ -4,18 +4,34 @@ import {
   DIARY_DESCRIPTION,
   DIARY_PLACEHOLDER,
   DIARY_TITLE,
-  SAVE_BUTTON_TEXT,
   WORDS_MAX,
   WORDS_SUFFIX,
 } from '@/constants/diary.constants'
+import { useObservable } from '@vueuse/rxjs'
+import { useConfirm } from 'primevue/useconfirm'
+import { tap } from 'rxjs'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import DiaryInsightTip from './DiaryInsightTip.vue'
 
-const { actions } = useDiary()
+const { addDiary$ } = useDiary()
 const diaryRef = ref('')
+const confirm = useConfirm()
+const router = useRouter()
 
 function write() {
-  actions.addDiary(diaryRef.value)
+  useObservable(addDiary$(diaryRef.value).pipe(tap(() => router.push('/history'))))
+}
+
+function openConfirm() {
+  confirm.require({
+    message: 'Are you sure you want to submit this diary entry?',
+    header: 'Confirm Submission',
+    icon: 'pi pi-exclamation-triangle',
+    acceptLabel: 'Submit',
+    rejectLabel: 'Cancel',
+    accept: () => write(),
+  })
 }
 </script>
 
@@ -46,10 +62,11 @@ function write() {
         >
         <div class="flex items-center space-x-4">
           <button
-            @click="write"
-            class="px-6 py-3 text-gray-500 hover:text-gray-800 transition-colors"
+            @click="openConfirm()"
+            :disabled="!diaryRef.length"
+            class="px-6 py-3 text-gray-500 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {{ SAVE_BUTTON_TEXT }}
+            Save
           </button>
         </div>
       </div>
