@@ -1,6 +1,7 @@
 import type { DiaryRemoteModel } from '@/models'
 import { createResource } from '@/utils'
-import { catchError, Subject, switchMap, takeUntil, tap } from 'rxjs'
+import { catchError, map, Subject, takeUntil, tap } from 'rxjs'
+import type { AjaxResponse } from 'rxjs/ajax'
 import { onUnmounted, ref } from 'vue'
 
 export function useDiary() {
@@ -9,10 +10,16 @@ export function useDiary() {
   const url = 'http://localhost/diaries'
   // use shared resource helper
   const api = createResource<DiaryRemoteModel>(url)
-  const fetchDiaries = () =>
+
+  // --- Factory observables (cold) - component can pipe/subscribe and handle cancellation ---
+  const fetchDiaries$ = () =>
     api.get().pipe(
       tap((data) => (diaries.value = data)),
       takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Fetch diaries failed:', err)
+        throw err
+      }),
     )
 
   const deleteDiary$ = (id: number) =>
@@ -20,25 +27,27 @@ export function useDiary() {
       tap(() => {
         diaries.value = diaries.value.filter((d) => d.id !== id)
       }),
-      catchError((error) => {
-        console.error('Delete request failed:', error)
-        throw error
-      }),
       takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Delete request failed:', err)
+        throw err
+      }),
     )
 
   const addDiary$ = (content: string) =>
     api.post({ content }).pipe(
-      switchMap(() => fetchDiaries()),
-      catchError((error) => {
-        console.error('Add diary request failed:', error)
-        throw error
-      }),
+      map((res: AjaxResponse<unknown>) => (res.response as { data: DiaryRemoteModel }).data),
+      tap((newDiary) => diaries.value.unshift(newDiary)),
       takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Add diary request failed:', err)
+        throw err
+      }),
     )
 
+  // --- Convenience actions: subscribe internally and update local ref; cleaned up on unmount ---
   const actions = {
-    fetchDiaries: () => fetchDiaries().subscribe(),
+    fetchDiaries: () => fetchDiaries$().subscribe(),
     addDiary: (content: string) => addDiary$(content).subscribe(),
     deleteDiary: (id: number) => deleteDiary$(id).subscribe(),
     editDiary: (id: number) => console.log('edit diary with id:', id),
@@ -52,6 +61,11 @@ export function useDiary() {
 
   return {
     diaries,
+    // raw factories for custom pipelines
+    fetchDiaries$,
+    addDiary$,
+    deleteDiary$,
+    // convenience actions for simple use
     actions,
   }
 }
