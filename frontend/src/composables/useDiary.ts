@@ -11,7 +11,7 @@ export function useDiary() {
   // use shared resource helper
   const api = createResource<DiaryRemoteModel>(url)
 
-  // --- Factory observables (cold) - component can pipe/subscribe and handle cancellation ---
+  // ---  observables (cold) - component can pipe/subscribe and handle cancellation ---
   const fetchDiaries$ = () =>
     api.get().pipe(
       tap((data) => (diaries.value = data)),
@@ -61,11 +61,10 @@ export function useDiary() {
 
   return {
     diaries,
+    actions,
     // raw factories for custom pipelines
     fetchDiaries$,
     addDiary$,
     deleteDiary$,
-    // convenience actions for simple use
-    actions,
   }
 }
