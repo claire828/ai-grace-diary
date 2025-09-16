@@ -1,11 +1,10 @@
-import { hash, compare } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-import { Service } from 'typedi';
 import { SECRET_KEY } from '@config';
 import pg from '@database';
 import { HttpException } from '@exceptions/httpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
+import { compare, hash } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 
 const createToken = (user: User): TokenData => {
   const dataStoredInToken: DataStoredInToken = { id: user.id };
@@ -18,7 +17,6 @@ const createCookie = (tokenData: TokenData): string => {
   return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
 };
 
-@Service()
 export class AuthService {
   public async signup(userData: User): Promise<User> {
     const { email, password } = userData;
@@ -101,3 +99,6 @@ export class AuthService {
     return rows[0];
   }
 }
+
+// Export singleton instance
+export const authService = new AuthService();

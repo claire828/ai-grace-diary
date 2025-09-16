@@ -1,16 +1,12 @@
-import { AnalyzeService } from '@/services/analyze.service';
-import { DiaryService } from '@services/diary.service';
+import { analyzeService } from '@/services/analyze.service';
+import { diaryService } from '@services/diary.service';
 import { NextFunction, Request, Response } from 'express';
-import { Container } from 'typedi';
 
 export class DiaryController {
-  public diaryService = Container.get(DiaryService);
-  private analyzeService = Container.get(AnalyzeService);
-
   public createDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { content } = req.body;
-      const diary = await this.diaryService.createDiary(content);
+      const diary = await diaryService.createDiary(content);
       res.status(201).json({ data: diary, message: 'created' });
     } catch (error) {
       next(error);
@@ -19,7 +15,7 @@ export class DiaryController {
 
   public getTodayDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const diary = await this.diaryService.getTodayDiary();
+      const diary = await diaryService.getTodayDiary();
       res.status(200).json({ data: diary, message: 'today' });
     } catch (error) {
       next(error);
@@ -28,7 +24,7 @@ export class DiaryController {
 
   public getAllDiaries = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const diaries = await this.diaryService.getAllDiaries();
+      const diaries = await diaryService.getAllDiaries();
       res.status(200).json({ data: diaries, message: 'all diaries' });
     } catch (error) {
       next(error);
@@ -38,7 +34,7 @@ export class DiaryController {
   public deleteDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const diaryId = Number(req.params.id);
-      await this.diaryService.deleteDiary(diaryId);
+      await diaryService.deleteDiary(diaryId);
       res.status(200).json({ message: 'deleted' });
     } catch (error) {
       next(error);
@@ -48,13 +44,13 @@ export class DiaryController {
   analyzeDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const diaryId = Number(req.params.id);
-      const diary = await this.diaryService.getDiaryById(diaryId);
+      const diary = await diaryService.getDiaryById(diaryId);
       if (!diary) {
         res.status(404).json({ error: 'Diary not found' });
         return;
       }
       res.status(200).json({ message: 'analyzing' });
-      this.analyzeService.analyzeDiary(diaryId, diary.content);
+      analyzeService.analyzeDiary(diaryId, diary.content);
     } catch (error) {
       next(error);
     }

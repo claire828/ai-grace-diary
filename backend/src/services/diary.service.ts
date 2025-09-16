@@ -1,5 +1,4 @@
 import pg from '@database';
-import { Service } from 'typedi';
 
 export type DiaryStatus = 'draft' | 'analyzing' | 'analyzed';
 export interface Diary {
@@ -9,10 +8,8 @@ export interface Diary {
   status: DiaryStatus;
 }
 
-@Service()
 export class DiaryService {
   public async createDiary(content: string): Promise<Diary> {
-    // 新增日記預設為 draft
     const { rows } = await pg.query('INSERT INTO diary (content, status) VALUES ($1, $2) RETURNING *', [content, 'draft']);
     console.log('created diary', rows);
     return rows[0];
@@ -43,3 +40,6 @@ export class DiaryService {
     await pg.query('UPDATE diary SET status = $1 WHERE id = $2', [status, diaryId]);
   }
 }
+
+// Export singleton instance
+export const diaryService = new DiaryService();

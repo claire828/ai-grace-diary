@@ -1,16 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
-import { Container } from 'typedi';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
-import { AuthService } from '@services/auth.service';
+import { authService } from '@services/auth.service';
+import { NextFunction, Request, Response } from 'express';
 
 export class AuthController {
-  public auth = Container.get(AuthService);
-
   public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.body;
-      const signUpUserData: User = await this.auth.signup(userData);
+      const signUpUserData: User = await authService.signup(userData);
 
       res.status(201).json({ data: signUpUserData, message: 'signup' });
     } catch (error) {
@@ -21,7 +18,7 @@ export class AuthController {
   public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.body;
-      const { cookie, findUser } = await this.auth.login(userData);
+      const { cookie, findUser } = await authService.login(userData);
 
       res.setHeader('Set-Cookie', [cookie]);
       res.status(200).json({ data: findUser, message: 'login' });
@@ -33,7 +30,7 @@ export class AuthController {
   public logOut = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: User = req.user;
-      const logOutUserData: User = await this.auth.logout(userData);
+      const logOutUserData: User = await authService.logout(userData);
 
       res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
       res.status(200).json({ data: logOutUserData, message: 'logout' });

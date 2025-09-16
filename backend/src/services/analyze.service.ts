@@ -1,20 +1,16 @@
-import { Inject, Service } from 'typedi';
-import { DiaryService } from './diary.service';
+import { geminiService } from './gemini.service';
 
-@Service()
 export class AnalyzeService {
-  @Inject(() => DiaryService)
-  private diaryService: DiaryService;
-  // @Inject(() => GeminiService)
-  // private geminiService: GeminiService;
-
   public async analyzeDiary(diaryId: number, content: string): Promise<void> {
     try {
-      //this.diaryService.updateDiaryStatus(diaryId, 'analyzing');
-      // this.geminiService.analyzeDiary(content);
+      // await diaryService.updateDiaryStatus(diaryId, 'analyzing');
+      geminiService.analyzeDiary(content);
       console.log(`Analyzing diary with ID: ${diaryId}, ${content}`);
     } catch (err) {
       console.error('Error in analyzeDiary:', err);
     }
   }
 }
+
+// Export singleton instance
+export const analyzeService = new AnalyzeService();
