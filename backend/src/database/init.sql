@@ -1,4 +1,4 @@
-CREATE TYPE status AS ENUM ('draft', 'published', 'analyzed');
+CREATE TYPE status AS ENUM ('draft', 'analyzing', 'analyzed');
 CREATE TYPE mood AS ENUM ('Positive', 'Negative', 'Neutral', 'Waiting for Analysis');
 
 
