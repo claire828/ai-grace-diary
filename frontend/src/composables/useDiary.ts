@@ -1,5 +1,5 @@
 import type { DiaryRemoteModel } from '@/models'
-import { createResource } from '@/utils'
+import { createResource, postJSON } from '@/utils'
 import { catchError, map, Subject, takeUntil, tap } from 'rxjs'
 import type { AjaxResponse } from 'rxjs/ajax'
 import { onUnmounted, ref } from 'vue'
@@ -45,13 +45,24 @@ export function useDiary() {
       }),
     )
 
-  // --- Convenience actions: subscribe internally and update local ref; cleaned up on unmount ---
+  const analyzeDiary$ = (id: number | string) =>
+    postJSON<AjaxResponse<unknown>>(`${url}/${id}/analyze`).pipe(
+      map(() => (diaries.value.find((d) => d.id === Number(id))!.status = 'analyzing')),
+      takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Analyze diary request failed:', err)
+        throw err
+      }),
+    )
+
+  // --- Convenience actions: Immediately trigger side effects (e.g., delete/add/analyze).
+  // Use only when you do not need to track isLoading/error states.
+  // Suitable for direct actions that immediately update the UI. ---
   const actions = {
     fetchDiaries: () => fetchDiaries$().subscribe(),
     addDiary: (content: string) => addDiary$(content).subscribe(),
     deleteDiary: (id: number) => deleteDiary$(id).subscribe(),
-    editDiary: (id: number) => console.log('edit diary with id:', id),
-    analyzeDiary: (id: number) => console.log('analyze diary with id:', id),
+    analyzeDiary: (id: number) => analyzeDiary$(id).subscribe(),
   }
 
   onUnmounted(() => {
@@ -62,9 +73,10 @@ export function useDiary() {
   return {
     diaries,
     actions,
-    // raw factories for custom pipelines
+    // --- raw factories: Provide observable factories for use with useObservable in components to flexibly obtain isLoading, error, and data states, and compose custom pipelines. ---
     fetchDiaries$,
     addDiary$,
     deleteDiary$,
+    analyzeDiary$,
   }
 }

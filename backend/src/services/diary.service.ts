@@ -33,4 +33,13 @@ export class DiaryService {
   public async deleteDiary(diaryId: number): Promise<void> {
     await pg.query('DELETE FROM diary WHERE id = $1', [diaryId]);
   }
+
+  public async getDiaryById(id: number): Promise<Diary | null> {
+    const { rows } = await pg.query('SELECT * FROM diary WHERE id = $1', [id]);
+    return rows[0] || null;
+  }
+
+  public async updateDiaryStatus(diaryId: number, status: DiaryStatus): Promise<void> {
+    await pg.query('UPDATE diary SET status = $1 WHERE id = $2', [status, diaryId]);
+  }
 }

@@ -42,4 +42,20 @@ export class DiaryController {
       next(error);
     }
   };
+
+  analyzeDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const diaryId = Number(req.params.id);
+      const diary = await this.diaryService.getDiaryById(diaryId);
+      if (!diary) {
+        res.status(404).json({ error: 'Diary not found' });
+        return;
+      }
+
+      res.status(200).json({ message: 'analyzing' });
+      // TODO: call the queue job to analyze the diary asynchronously
+    } catch (error) {
+      next(error);
+    }
+  };
 }

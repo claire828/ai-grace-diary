@@ -1,4 +1,5 @@
 import { GEMINI_API_KEY, GEMINI_MODEL } from '@/config';
+import pq from '@database';
 import { ContentListUnion, GoogleGenAI, SafetyFilterLevel } from '@google/genai';
 import Container, { Service } from 'typedi';
 import { DiaryService } from './diary.service';
@@ -26,8 +27,9 @@ export class GeminiService {
   ];
 
   async analyzeDiary(id: number) {
-    const diary = await this.#diaryService.getDiaryById(id);
+    const diary = await pq.query('SELECT * FROM diary WHERE id = $1', [id]).then(res => res.rows[0] ?? null);
     if (!diary) throw new Error('Diary not found');
+    // await pq.query('UPDATE diary SET status = $1 WHERE id = $2', ['analyzing', id]);
     return await this.#contentAi.models.generateContent(this.#generateContentPayload(diary.content));
   }
 

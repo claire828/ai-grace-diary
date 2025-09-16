@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import type { DiaryActionType, DiaryStatus, MoodStatus } from '@/types/diary.type'
-import { defineEmits, defineProps } from 'vue'
+import { computed, defineEmits, defineProps } from 'vue'
 import IconChevronRight from './icons/IconChevronRight.vue'
-import IconEditable from './icons/IconEditable.vue'
 import IconTrash from './icons/IconTrash.vue'
-
 const props = defineProps<{
   date: string
   content: string
@@ -16,7 +14,8 @@ const emit = defineEmits<{
   (e: DiaryActionType): void
 }>()
 
-const canAnalyzed = props.status === 'draft'
+const canAnalyzed = computed(() => props.status === 'draft')
+const inAnalyzing = computed(() => props.status === 'analyzing')
 
 function handleAction(event: Event, type: DiaryActionType) {
   event.stopPropagation()
@@ -26,11 +25,11 @@ function handleAction(event: Event, type: DiaryActionType) {
 
 <template>
   <div
-    class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+    class="flex flex-col gap-2 md:flex-row items-start md:items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
   >
     <section>
       <h3 class="font-medium text-gray-900">{{ props.date }}</h3>
-      <p class="text-sm text-gray-600">
+      <p class="text-sm text-gray-600 truncate max-w-xs md:max-w-lg lg:max-w-3xl">
         {{ props.content }}
       </p>
     </section>
@@ -43,11 +42,11 @@ function handleAction(event: Event, type: DiaryActionType) {
         aria-label="Delete diary"
       />
 
-      <IconEditable
+      <!-- <IconEditable 
         class="hover:scale-110 transition-transform"
         @click="handleAction($event, 'edit')"
         aria-label="Edit diary"
-      />
+      /> -->
 
       <div v-if="canAnalyzed" class="flex space-x-2">
         <button
@@ -55,8 +54,14 @@ function handleAction(event: Event, type: DiaryActionType) {
           class="flex cursor-pointer items-center px-3 py-1 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl hover:from-purple-600 hover:to-indigo-600 transition-all transform hover:scale-105 shadow-lg"
         >
           <IconAnalyze />
-          Analyze My Day
+          Analyze
         </button>
+      </div>
+
+      <div v-if="inAnalyzing" class="flex space-x-2">
+        <div class="flex items-center bg-amber-600 px-3 py-1 text-white rounded-2xl shadow-lg">
+          ...analyzing
+        </div>
       </div>
 
       <template v-if="props.mood !== 'Waiting for Analysis'">

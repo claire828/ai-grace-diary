@@ -19,7 +19,6 @@ actions.fetchDiaries()
         :status="diary.status"
         :mood="diary.mood"
         @delete="actions.deleteDiary(diary.id)"
-        @edit="actions.editDiary(diary.id)"
         @analyze="actions.analyzeDiary(diary.id)"
       />
     </div>
