@@ -1,9 +1,11 @@
+import { AnalyzeService } from '@/services/analyze.service';
 import { DiaryService } from '@services/diary.service';
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
 
 export class DiaryController {
   public diaryService = Container.get(DiaryService);
+  private analyzeService = Container.get(AnalyzeService);
 
   public createDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -51,9 +53,8 @@ export class DiaryController {
         res.status(404).json({ error: 'Diary not found' });
         return;
       }
-
       res.status(200).json({ message: 'analyzing' });
-      // TODO: call the queue job to analyze the diary asynchronously
+      this.analyzeService.analyzeDiary(diaryId, diary.content);
     } catch (error) {
       next(error);
     }

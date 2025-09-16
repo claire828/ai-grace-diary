@@ -1,12 +1,9 @@
 import { GEMINI_API_KEY, GEMINI_MODEL } from '@/config';
-import pq from '@database';
 import { ContentListUnion, GoogleGenAI, SafetyFilterLevel } from '@google/genai';
-import Container, { Service } from 'typedi';
-import { DiaryService } from './diary.service';
+import { Service } from 'typedi';
 
 @Service()
 export class GeminiService {
-  readonly #diaryService = Container.get(DiaryService);
   readonly #contentAi = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
   readonly #instructions = [
     { text: 'You are a professional text psychologist and emotional analyst specializing in diary content analysis.' },
@@ -26,11 +23,10 @@ export class GeminiService {
     { text: "Always use a compassionate, non-judgmental tone. Avoid making assumptions. Respect the user's vulnerability." },
   ];
 
-  async analyzeDiary(id: number) {
-    const diary = await pq.query('SELECT * FROM diary WHERE id = $1', [id]).then(res => res.rows[0] ?? null);
-    if (!diary) throw new Error('Diary not found');
-    // await pq.query('UPDATE diary SET status = $1 WHERE id = $2', ['analyzing', id]);
-    return await this.#contentAi.models.generateContent(this.#generateContentPayload(diary.content));
+  async analyzeDiary(content: string) {
+    const payload = this.#generateContentPayload(content);
+    console.log('send to gemini api:', payload);
+    return await this.#contentAi.models.generateContent(payload);
   }
 
   #generateContentPayload(contents: ContentListUnion) {
