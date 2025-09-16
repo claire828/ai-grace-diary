@@ -5,7 +5,6 @@ import { Container } from 'typedi';
 export class DiaryController {
   public diaryService = Container.get(DiaryService);
 
-  // 建立日記
   public createDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { content } = req.body;
@@ -16,7 +15,6 @@ export class DiaryController {
     }
   };
 
-  // 取得今天的日記
   public getTodayDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const diary = await this.diaryService.getTodayDiary();
@@ -35,19 +33,6 @@ export class DiaryController {
     }
   };
 
-  // 編輯日記
-  public updateDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const diaryId = Number(req.params.id);
-      const { content } = req.body;
-      const diary = await this.diaryService.updateDiary(diaryId, content);
-      res.status(200).json({ data: diary, message: 'updated' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  // 刪除日記
   public deleteDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const diaryId = Number(req.params.id);
