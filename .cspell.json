@@ -18,6 +18,8 @@
     "primevue",
     "primeuix",
     "confirmdialog",
-    "confirmationservice"
+    "confirmationservice",
+    "genai",
+    "useconfirm"
   ]
 }
