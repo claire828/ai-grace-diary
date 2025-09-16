@@ -1,10 +1,8 @@
-import { hash } from 'bcrypt';
-import { Service } from 'typedi';
 import pg from '@database';
 import { HttpException } from '@exceptions/httpException';
 import { User } from '@interfaces/users.interface';
+import { hash } from 'bcrypt';
 
-@Service()
 export class UserService {
   public async findAllUser(): Promise<User[]> {
     const { rows } = await pg.query(`
@@ -131,3 +129,4 @@ export class UserService {
     return deleteUserData;
   }
 }
+export const userService = new UserService();
