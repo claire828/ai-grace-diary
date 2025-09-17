@@ -8,7 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav>
       <RouterLink to="/">Write Diary</RouterLink> |
       <RouterLink to="/history">Recent Diaries</RouterLink> |
-      <RouterLink to="/report">Report</RouterLink>
+      <RouterLink to="/diary-analysis">Diary Analysis</RouterLink>
     </nav>
   </header>
 

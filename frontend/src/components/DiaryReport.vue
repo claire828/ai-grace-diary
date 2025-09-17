@@ -20,8 +20,8 @@ import StressLevel from './StressLevel.vue'
     <StressLevel></StressLevel>
     <EmotionalState></EmotionalState>
     <EmotionalBalance></EmotionalBalance>
-    <GratitudeReflections></GratitudeReflections>
     <KeyThemes></KeyThemes>
+    <GratitudeReflections></GratitudeReflections>
     <DayReflection></DayReflection>
     <GentleGuidance></GentleGuidance>
   </div>
