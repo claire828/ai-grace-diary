@@ -1,6 +1,6 @@
 // import { ContentListUnion, GoogleGenAI } from '@google/genai';
 import { GEMINI_API_KEY, GEMINI_MODEL } from '@/config';
-import { ContentListUnion, GenerateContentParameters, GoogleGenAI, HarmBlockThreshold, HarmCategory } from '@google/genai';
+import { ContentListUnion, GenerateContentParameters, GoogleGenAI, HarmBlockThreshold, HarmCategory, Type } from '@google/genai';
 
 const instructions = [
   {
@@ -46,19 +46,19 @@ const instructions = [
   {
     text: `Output JSON must match this schema:
     {
-      "stressLevel": { "score": 1, "explanation": "..." },
-      "emotionalState": { "category": "Positive", "moodWords": ["Happy"], "intensity": "medium" },
-      "gratitude": [
+      stressLevel: { score: 1, explanation: "..." },
+      emotionalState: { category: "Positive", moodWords: ["Happy"], intensity: "medium" },
+      gratitude: [
         "Grateful for ...",
         "Thankful for ...",
         "Appreciative of ...",
         "Happy to ...",
         "I cherish ..."
       ],
-      "themes": ["..."],
-      "positiveNegativeRatio": "70/30",
-      "summary": "...",
-      "feedback": "..."
+      themes: ["..."],
+      positiveNegativeRatio: "70/30",
+      summary: "...",
+      feedback": "..."
     }`,
   },
 ];
@@ -87,40 +87,40 @@ export class GeminiService {
           },
         ],
         responseMimeType: 'application/json',
-        responseJsonSchema: {
-          type: 'object',
+        responseSchema: {
+          type: Type.OBJECT,
           properties: {
             stressLevel: {
-              type: 'object',
+              type: Type.OBJECT,
               properties: {
-                score: { type: 'integer', minimum: 1, maximum: 5 },
-                explanation: { type: 'string' },
+                score: { type: Type.INTEGER, minimum: 1, maximum: 5 },
+                explanation: { type: Type.STRING },
               },
               required: ['score', 'explanation'],
             },
             emotionalState: {
-              type: 'object',
+              type: Type.OBJECT,
               properties: {
-                category: { type: 'string', enum: ['Positive', 'Neutral', 'Negative'] },
+                category: { type: Type.STRING, enum: ['Positive', 'Neutral', 'Negative'] },
                 moodWords: {
-                  type: 'array',
+                  type: Type.ARRAY,
                   items: { type: 'string' },
                 },
-                intensity: { type: 'string', enum: ['low', 'medium', 'high'] },
+                intensity: { type: Type.STRING, enum: ['low', 'medium', 'high'] },
               },
               required: ['category', 'moodWords', 'intensity'],
             },
             gratitude: {
-              type: 'array',
-              items: { type: 'string' },
+              type: Type.ARRAY,
+              items: { type: Type.STRING },
             },
             themes: {
-              type: 'array',
+              type: Type.ARRAY,
               items: { type: 'string' },
             },
-            positiveNegativeRatio: { type: 'string' },
-            summary: { type: 'string' },
-            feedback: { type: 'string' },
+            positiveNegativeRatio: { type: Type.STRING },
+            summary: { type: Type.STRING },
+            feedback: { type: Type.STRING },
           },
           required: ['stressLevel', 'emotionalState', 'gratitude', 'themes', 'positiveNegativeRatio', 'summary', 'feedback'],
         },
