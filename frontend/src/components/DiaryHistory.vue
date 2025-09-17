@@ -4,6 +4,7 @@ import { formatEuropean } from '@/utils'
 import DiaryRow from './DiaryRow.vue'
 
 const { diaries, actions } = useDiary()
+actions.fetchDiaries()
 </script>
 
 <template>

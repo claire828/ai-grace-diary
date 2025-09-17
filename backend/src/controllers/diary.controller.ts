@@ -49,9 +49,8 @@ export class DiaryController {
         res.status(404).json({ error: 'Diary not found' });
         return;
       }
-      // res.status(200).json({ message: 'analyzing' });
-      const result = await analyzeService.analyzeDiary(diaryId, diary.content);
-      res.status(200).json({ message: 'analyzing', result });
+      await analyzeService.analyzeDiary(diaryId, diary.content);
+      res.status(200).json({ message: 'analyzed' });
     } catch (error) {
       next(error);
     }
