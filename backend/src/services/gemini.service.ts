@@ -67,9 +67,8 @@ export class GeminiService {
   readonly #contentAi = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
   async analyzeDiary(content: string) {
-    const payload = this.#generateContentPayload(content);
-    console.log('===send to gemini api====');
-    return await this.#contentAi.models.generateContent(payload);
+    const config = this.#generateContentPayload(content);
+    return await this.#contentAi.models.generateContent(config);
   }
 
   #generateContentPayload(contents: ContentListUnion): GenerateContentParameters {

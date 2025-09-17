@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import DayReflection from './DayReflection.vue'
 import EmotionalBalance from './EmotionalBalance.vue'
@@ -11,11 +11,6 @@ import StressLevel from './StressLevel.vue'
 
 const route = useRoute()
 const diaryId = computed(() => route.params.id as string)
-
-onMounted(() => {
-  console.log('Diary Analysis for ID:', diaryId.value)
-  // 這裡可以根據 diaryId 獲取具體的分析數據
-})
 </script>
 
 <template>

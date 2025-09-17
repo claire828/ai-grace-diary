@@ -1,6 +1,7 @@
 import type { DiaryRemoteModel } from '@/models'
+import type { DiaryStatus } from '@/types'
 import { createResource, postJSON } from '@/utils'
-import { catchError, map, Subject, takeUntil, tap } from 'rxjs'
+import { catchError, defer, map, Subject, takeUntil, tap } from 'rxjs'
 import type { AjaxResponse } from 'rxjs/ajax'
 import { onUnmounted, ref } from 'vue'
 
@@ -45,15 +46,26 @@ export function useDiary() {
       }),
     )
 
-  const analyzeDiary$ = (id: number | string) =>
-    postJSON<AjaxResponse<unknown>>(`${url}/${id}/analyze`).pipe(
-      map(() => (diaries.value.find((d) => d.id === Number(id))!.status = 'analyzing')),
-      takeUntil(destroy$),
+  const updateStatus = (id: number, toStatus: DiaryStatus) => {
+    const diary = diaries.value.find((d) => d.id === id)
+    if (diary) {
+      diary.status = toStatus
+    }
+  }
+
+  const analyzeDiary$ = (id: number) => {
+    return defer(() => {
+      updateStatus(id, 'analyzing')
+      return postJSON<AjaxResponse<unknown>>(`${url}/${+id}/analyze`)
+    }).pipe(
+      tap(() => updateStatus(id, 'analyzed')),
       catchError((err) => {
         console.error('Analyze diary request failed:', err)
+        updateStatus(id, 'draft')
         throw err
       }),
     )
+  }
 
   // --- Convenience actions: Immediately trigger side effects (e.g., delete/add/analyze).
   // Use only when you do not need to track isLoading/error states.
