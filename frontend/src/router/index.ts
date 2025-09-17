@@ -14,7 +14,7 @@ const router = createRouter({
       component: () => import('../components/DiaryHistory.vue'),
     },
     {
-      path: '/diary-analysis',
+      path: '/diary-analysis/:id',
       name: 'diary-analysis',
       component: () => import('../components/DiaryReport.vue'),
     },

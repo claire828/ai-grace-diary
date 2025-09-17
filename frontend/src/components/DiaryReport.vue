@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import DayReflection from './DayReflection.vue'
 import EmotionalBalance from './EmotionalBalance.vue'
 import EmotionalState from './EmotionalState.vue'
@@ -6,6 +8,14 @@ import GentleGuidance from './GentleGuidance.vue'
 import GratitudeReflections from './GratitudeReflections.vue'
 import KeyThemes from './KeyThemes.vue'
 import StressLevel from './StressLevel.vue'
+
+const route = useRoute()
+const diaryId = computed(() => route.params.id as string)
+
+onMounted(() => {
+  console.log('Diary Analysis for ID:', diaryId.value)
+  // 這裡可以根據 diaryId 獲取具體的分析數據
+})
 </script>
 
 <template>
@@ -13,6 +23,9 @@ import StressLevel from './StressLevel.vue'
     <h1 class="text-3xl font-bold text-foreground mb-2">Your Diary Analysis</h1>
     <p class="text-muted-foreground text-lg">
       Understanding your emotional journey with gentle insights
+    </p>
+    <p class="text-sm text-muted-foreground mt-2" v-if="diaryId">
+      Analysis for Diary #{{ diaryId }}
     </p>
   </header>
 
