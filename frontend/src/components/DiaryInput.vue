@@ -9,18 +9,26 @@ import {
 } from '@/constants/diary.constants'
 import { useObservable } from '@vueuse/rxjs'
 import { useConfirm } from 'primevue/useconfirm'
-import { tap } from 'rxjs'
+import { catchError, EMPTY, tap } from 'rxjs'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import DiaryInsightTip from './DiaryInsightTip.vue'
 
-const { addDiary$ } = useDiary()
+const { streams } = useDiary()
 const diaryRef = ref('')
 const confirm = useConfirm()
 const router = useRouter()
 
 function write() {
-  useObservable(addDiary$(diaryRef.value).pipe(tap(() => router.push('/history'))))
+  useObservable(
+    streams.addDiary$(diaryRef.value).pipe(
+      tap(() => router.push('/history')),
+      catchError((err) => {
+        console.error('Failed to submit diary:', err)
+        return EMPTY
+      }),
+    ),
+  )
 }
 
 function openConfirm() {
@@ -52,7 +60,7 @@ function openConfirm() {
         v-model="diaryRef"
         :maxlength="WORDS_MAX"
         :placeholder="DIARY_PLACEHOLDER"
-        class="w-full h-96 p-6 border-2 border-purple-100 rounded-2xl focus:border-purple-300 focus:outline-none resize-none text-gray-700 leading-relaxed"
+        class="w-full h-96 p-6 border-2 border-purple-100 rounded-2xl focus:border-purple-300 focus:outline-none resize-none text-gray-700 leading-relaxed disabled:opacity-50 disabled:cursor-not-allowed"
       ></textarea>
 
       <!-- bottom-->
@@ -64,9 +72,9 @@ function openConfirm() {
           <button
             @click="openConfirm()"
             :disabled="!diaryRef.length"
-            class="px-6 py-3 text-gray-500 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            class="px-6 py-3 text-gray-500 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
           >
-            Save
+            'Save'
           </button>
         </div>
       </div>
