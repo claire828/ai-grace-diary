@@ -46,7 +46,7 @@ const stressColor = computed(() => {
           <div
             v-for="i in 5"
             :key="i"
-            :class="['w-3 h-3 rounded-full', i <= level.score ? 'bg-primary' : 'bg-muted']"
+            :class="['w-3 h-3 rounded-full', i <= level.score ? 'bg-primary' : 'bg-gray-300']"
           ></div>
         </div>
       </div>

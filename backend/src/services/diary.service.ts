@@ -16,12 +16,6 @@ export class DiaryService {
     return rows[0];
   }
 
-  public async getTodayDiary(): Promise<Diary | null> {
-    const { rows } = await client.query('SELECT * FROM diary WHERE created_at::date = CURRENT_DATE LIMIT 1');
-    console.log('get diary', rows);
-    return rows[0] || null;
-  }
-
   public async getAllDiaries(): Promise<Diary[]> {
     const { rows } = await client.query(`SELECT * FROM diary ORDER BY created_at DESC`);
     console.log('get all diaries', rows);

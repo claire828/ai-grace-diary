@@ -13,10 +13,17 @@ export class DiaryController {
     }
   };
 
-  public getTodayDiary = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getDiaryById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const diary = await diaryService.getTodayDiary();
-      res.status(200).json({ data: diary, message: 'today' });
+      const diaryId = Number(req.params.id);
+      const diary = await diaryService.getDiaryById(diaryId);
+
+      if (!diary) {
+        res.status(404).json({ error: 'Diary not found' });
+        return;
+      }
+
+      res.status(200).json({ data: diary, message: 'diary retrieved' });
     } catch (error) {
       next(error);
     }

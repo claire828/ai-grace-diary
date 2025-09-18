@@ -51,6 +51,16 @@ export function useDiary() {
       }),
     )
 
+  const fetchDiaryStream$ = (id: number | string) =>
+    getJSON<{ data: DiaryRemoteModel }>(`${url}/${id}`).pipe(
+      map((res) => res.data),
+      takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Fetch diary request failed:', err)
+        throw err
+      }),
+    )
+
   const fetchDiaryAnalysisStream$ = (id: number | string) =>
     getJSON<{ data: DiaryAnalysisRemote }>(`${url}/${id}/analysis`).pipe(
       map((res) => res.data),
@@ -123,6 +133,7 @@ export function useDiary() {
     // --- Raw streams for advanced usage with useObservable ---
     streams: {
       fetchDiaries$: fetchDiariesStream$,
+      fetchDiary$: fetchDiaryStream$,
       addDiary$: addDiaryStream$,
       deleteDiary$: deleteDiaryStream$,
       analyzeDiary$: analyzeDiaryStream$,

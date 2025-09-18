@@ -7,8 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <header class="my-4">
     <nav>
       <RouterLink to="/">Write Diary</RouterLink> |
-      <RouterLink to="/history">Recent Diaries</RouterLink> |
-      <RouterLink to="/diary-analysis">Diary Analysis</RouterLink>
+      <RouterLink to="/history">Recent Diaries</RouterLink>
     </nav>
   </header>
 

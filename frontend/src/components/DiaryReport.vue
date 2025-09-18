@@ -5,6 +5,7 @@ import { useObservable } from '@vueuse/rxjs'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import DayReflection from './DayReflection.vue'
+import DiaryContent from './DiaryContent.vue'
 import EmotionalBalance from './EmotionalBalance.vue'
 import EmotionalState from './EmotionalState.vue'
 import GentleGuidance from './GentleGuidance.vue'
@@ -32,13 +33,16 @@ const analysis = useObservable(streams.fetchDiaryAnalysis$(diaryId.value), {
     </p>
   </header>
 
-  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-2" v-if="analysis">
-    <StressLevel :level="analysis?.stressLevel" />
-    <EmotionalState :state="analysis?.emotionalState" />
-    <EmotionalBalance :balance="analysis?.positiveNegativeRatio" />
-    <KeyThemes :themes="analysis?.themes" />
-    <GratitudeReflections :reflections="analysis?.gratitude" />
-    <DayReflection :summary="analysis?.summary" />
-    <GentleGuidance :guidance="analysis?.feedback" />
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-2">
+    <DiaryContent />
+    <div v-if="analysis" class="contents">
+      <StressLevel :level="analysis?.stressLevel" />
+      <EmotionalState :state="analysis?.emotionalState" />
+      <EmotionalBalance :balance="analysis?.positiveNegativeRatio" />
+      <KeyThemes :themes="analysis?.themes" />
+      <GratitudeReflections :reflections="analysis?.gratitude" />
+      <DayReflection :summary="analysis?.summary" />
+      <GentleGuidance :guidance="analysis?.feedback" />
+    </div>
   </div>
 </template>
