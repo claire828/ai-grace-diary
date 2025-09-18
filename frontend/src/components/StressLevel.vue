@@ -1,5 +1,27 @@
 <script setup lang="ts">
+import type { StressLevel } from '@/models'
+import { computed } from 'vue'
 import IconTrendingUp from './icons/IconTrendingUp.vue'
+
+const props = defineProps<{
+  level: StressLevel
+}>()
+
+const stressLabel = computed(() => {
+  if (!props.level) return ''
+  const score = props.level.score
+  if (score <= 2) return 'Low'
+  if (score <= 3) return 'Moderate'
+  return 'High'
+})
+
+const stressColor = computed(() => {
+  if (!props.level) return ''
+  const score = props.level.score
+  if (score <= 2) return 'bg-green-100 text-green-700 border-green-200'
+  if (score <= 3) return 'bg-yellow-100 text-yellow-700 border-yellow-200'
+  return 'bg-red-100 text-red-700 border-red-200'
+})
 </script>
 
 <template>
@@ -16,23 +38,23 @@ import IconTrendingUp from './icons/IconTrendingUp.vue'
       </div>
     </div>
     <div data-slot="card-content" class="px-6 space-y-4">
-      <div class="flex items-center gap-3">
-        <div
-          class="px-4 py-2 rounded-full border-2 font-medium bg-yellow-100 text-yellow-700 border-yellow-200"
-        >
-          Moderate
+      <div class="flex items-center gap-3" v-if="level">
+        <div :class="['px-4 py-2 rounded-full border-2 font-medium', stressColor]">
+          {{ stressLabel }}
         </div>
         <div class="flex gap-1">
-          <div class="w-3 h-3 rounded-full bg-primary"></div>
-          <div class="w-3 h-3 rounded-full bg-primary"></div>
-          <div class="w-3 h-3 rounded-full bg-primary"></div>
-          <div class="w-3 h-3 rounded-full bg-muted"></div>
-          <div class="w-3 h-3 rounded-full bg-muted"></div>
+          <div
+            v-for="i in 5"
+            :key="i"
+            :class="['w-3 h-3 rounded-full', i <= level.score ? 'bg-primary' : 'bg-muted']"
+          ></div>
         </div>
       </div>
-      <p class="text-sm text-muted-foreground leading-relaxed">
-        Moderate stress detected. You're managing well but could benefit from some relaxation
-        techniques.
+      <p class="text-sm text-muted-foreground leading-relaxed" v-if="level">
+        {{ level.explanation }}
+      </p>
+      <p class="text-sm text-muted-foreground leading-relaxed" v-else>
+        No stress level data available.
       </p>
     </div>
   </div>

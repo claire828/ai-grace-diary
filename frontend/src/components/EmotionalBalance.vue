@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  balance: string
+}>()
+</script>
 
 <template>
   <div
@@ -32,11 +36,11 @@
         >Emotional Balance
       </div>
     </div>
-    <div data-slot="card-content" class="px-6 space-y-4">
+    <div data-slot="card-content" class="px-6 space-y-4" v-if="balance">
       <div class="space-y-2">
         <div class="flex justify-between text-sm">
-          <span class="text-emerald-600 font-medium">Positive</span
-          ><span class="text-emerald-600 font-medium">75%</span>
+          <span class="text-emerald-600 font-medium">Positive</span>
+          <span class="text-emerald-600 font-medium">{{ balance.split('/')[0] }}%</span>
         </div>
         <div
           aria-valuemax="100"
@@ -51,15 +55,15 @@
             data-state="indeterminate"
             data-max="100"
             data-slot="progress-indicator"
-            class="bg-primary h-full w-full flex-1 transition-all"
-            style="transform: translateX(-25%)"
+            class="bg-emerald-500 h-full w-full flex-1 transition-all"
+            :style="`transform: translateX(-${100 - parseInt(balance.split('/')[0])}%)`"
           ></div>
         </div>
       </div>
       <div class="space-y-2">
         <div class="flex justify-between text-sm">
-          <span class="text-rose-600 font-medium">Negative</span
-          ><span class="text-rose-600 font-medium">25%</span>
+          <span class="text-rose-600 font-medium">Negative</span>
+          <span class="text-rose-600 font-medium">{{ balance.split('/')[1] }}%</span>
         </div>
         <div
           aria-valuemax="100"
@@ -74,11 +78,14 @@
             data-state="indeterminate"
             data-max="100"
             data-slot="progress-indicator"
-            class="bg-primary h-full w-full flex-1 transition-all"
-            style="transform: translateX(-75%)"
+            class="bg-rose-500 h-full w-full flex-1 transition-all"
+            :style="`transform: translateX(-${100 - parseInt(balance.split('/')[1])}%)`"
           ></div>
         </div>
       </div>
+    </div>
+    <div v-else class="px-6">
+      <p class="text-sm text-muted-foreground">No emotional balance data available.</p>
     </div>
   </div>
 </template>

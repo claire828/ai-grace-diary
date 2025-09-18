@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+defineProps<{
+  guidance: string
+}>()
+</script>
 
 <template>
   <div
@@ -33,13 +37,13 @@
       </div>
     </div>
     <div data-slot="card-content" class="px-6">
-      <div class="bg-accent/5 p-4 rounded-lg border border-accent/20">
+      <div class="bg-accent/5 p-4 rounded-lg border border-accent/20" v-if="guidance">
         <p class="text-sm leading-relaxed text-foreground/90">
-          Your emotional awareness is beautiful. The gratitude you're expressing shows a healthy
-          mindset. Consider continuing your morning walks as they seem to bring you peace. Remember,
-          it's perfectly okay to have reflective days - they often lead to the most meaningful
-          insights about ourselves.
+          {{ guidance }}
         </p>
+      </div>
+      <div v-else class="bg-accent/5 p-4 rounded-lg border border-accent/20">
+        <p class="text-sm leading-relaxed text-muted-foreground">No guidance available.</p>
       </div>
     </div>
   </div>

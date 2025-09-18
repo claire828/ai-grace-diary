@@ -35,10 +35,10 @@ const analysis = useObservable(streams.fetchDiaryAnalysis$(diaryId.value), {
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-2" v-if="analysis">
     <StressLevel :level="analysis?.stressLevel" />
     <EmotionalState :state="analysis?.emotionalState" />
-    <EmotionalBalance :balance="analysis?.emotionalState" />
-    <KeyThemes :themes="analysis.themes" />
-    <GratitudeReflections />
-    <DayReflection :reflection="analysis?.summary" />
+    <EmotionalBalance :balance="analysis?.positiveNegativeRatio" />
+    <KeyThemes :themes="analysis?.themes" />
+    <GratitudeReflections :reflections="analysis?.gratitude" />
+    <DayReflection :summary="analysis?.summary" />
     <GentleGuidance :guidance="analysis?.feedback" />
   </div>
 </template>

@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  themes: string[]
+}>()
+</script>
 
 <template>
   <div
@@ -29,21 +33,16 @@
       </div>
     </div>
     <div data-slot="card-content" class="px-6">
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2" v-if="themes && themes.length > 0">
         <span
+          v-for="theme in themes"
+          :key="theme"
           data-slot="badge"
-          class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden [a&amp;]:hover:bg-primary/90 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
-          >Self-reflection</span
-        ><span
-          data-slot="badge"
-          class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden [a&amp;]:hover:bg-primary/90 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
-          >Entertainment</span
-        ><span
-          data-slot="badge"
-          class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden [a&amp;]:hover:bg-primary/90 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
-          >Nature</span
+          class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
+          >{{ theme }}</span
         >
       </div>
+      <p v-else class="text-sm text-muted-foreground">No themes available.</p>
     </div>
   </div>
 </template>

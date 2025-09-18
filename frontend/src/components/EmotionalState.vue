@@ -1,5 +1,24 @@
 <script setup lang="ts">
 import IconHeartStroke from '@/components/icons/IconHeartStroke.vue'
+import type { EmotionalState } from '@/models'
+import { computed } from 'vue'
+
+const props = defineProps<{
+  state: EmotionalState
+}>()
+const categoryColor = computed(() => {
+  if (!props.state) return ''
+  switch (props.state.category.toLowerCase()) {
+    case 'positive':
+      return 'bg-emerald-50 text-emerald-700 border-emerald-200'
+    case 'negative':
+      return 'bg-red-50 text-red-700 border-red-200'
+    case 'neutral':
+      return 'bg-gray-50 text-gray-700 border-gray-200'
+    default:
+      return 'bg-blue-50 text-blue-700 border-blue-200'
+  }
+})
 </script>
 
 <template>
@@ -16,12 +35,15 @@ import IconHeartStroke from '@/components/icons/IconHeartStroke.vue'
       </div>
     </div>
     <div data-slot="card-content" class="px-6">
-      <div class="space-y-4">
+      <div class="space-y-4" v-if="state">
         <div class="flex items-center gap-3">
           <span
             data-slot="badge"
-            class="inline-flex items-center justify-center rounded-md border text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden [a&amp;]:hover:bg-primary/90 px-3 py-1 bg-emerald-50 text-emerald-700 border-emerald-200"
-            >Positive</span
+            :class="[
+              'inline-flex items-center justify-center rounded-md border text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] px-3 py-1',
+              categoryColor,
+            ]"
+            >{{ state.category }}</span
           >
           <div class="flex items-center gap-2 text-sm text-muted-foreground">
             <svg
@@ -43,24 +65,21 @@ import IconHeartStroke from '@/components/icons/IconHeartStroke.vue'
               <path d="M22 5h-4"></path>
               <path d="M4 17v2"></path>
               <path d="M5 18H3"></path></svg
-            ><span class="capitalize">medium intensity</span>
+            ><span class="capitalize">{{ state.intensity }} intensity</span>
           </div>
         </div>
         <div class="flex flex-wrap gap-2">
           <span
+            v-for="mood in state.moodWords"
+            :key="mood"
             data-slot="badge"
-            class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden text-foreground [a&amp;]:hover:bg-accent [a&amp;]:hover:text-accent-foreground bg-card"
-            >Happy</span
-          ><span
-            data-slot="badge"
-            class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden text-foreground [a&amp;]:hover:bg-accent [a&amp;]:hover:text-accent-foreground bg-card"
-            >Reflective</span
-          ><span
-            data-slot="badge"
-            class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden text-foreground [a&amp;]:hover:bg-accent [a&amp;]:hover:text-accent-foreground bg-card"
-            >Grateful</span
+            class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] text-foreground bg-card"
+            >{{ mood }}</span
           >
         </div>
+      </div>
+      <div v-else class="px-6">
+        <p class="text-sm text-muted-foreground">No emotional state data available.</p>
       </div>
     </div>
   </div>

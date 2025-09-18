@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  summary: string
+}>()
+</script>
 <template>
   <div
     data-slot="card"
@@ -22,16 +26,16 @@
           class="lucide lucide-message-circle w-5 h-5 text-primary"
         >
           <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg
-        >Your Day in Reflection
+        >Your Day in Reflection (summary)
       </div>
     </div>
     <div data-slot="card-content" class="px-6">
-      <div class="bg-card/50 p-4 rounded-lg border border-border">
-        <p class="text-sm leading-relaxed italic text-foreground/90">
-          "Today felt like a gentle journey of self-discovery. I found myself appreciating the small
-          moments - from the inspiring film that moved me to the peaceful morning walk that cleared
-          my mind. There's a sense of gratitude flowing through my thoughts, and I'm learning to
-          embrace both the reflective quiet and the joy in simple pleasures."
+      <div class="bg-card/50 p-4 rounded-lg border border-border" v-if="summary">
+        <p class="text-sm leading-relaxed italic text-foreground/90">"{{ summary }}"</p>
+      </div>
+      <div v-else class="bg-card/50 p-4 rounded-lg border border-border">
+        <p class="text-sm leading-relaxed italic text-muted-foreground">
+          No reflection summary available.
         </p>
       </div>
     </div>

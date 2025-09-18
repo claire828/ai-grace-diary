@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  reflections: string[]
+}>()
+</script>
 
 <template>
   <div
@@ -29,8 +33,12 @@
       </div>
     </div>
     <div data-slot="card-content" class="px-6">
-      <div class="grid gap-3 sm:grid-cols-2">
-        <div class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border">
+      <div class="grid gap-3 sm:grid-cols-2" v-if="reflections && reflections.length > 0">
+        <div
+          v-for="reflection in reflections"
+          :key="reflection"
+          class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -47,89 +55,10 @@
               d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
             ></path>
           </svg>
-          <p class="text-sm leading-relaxed">Grateful for watching an inspiring movie today.</p>
-        </div>
-        <div class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-heart w-4 h-4 text-primary mt-0.5 flex-shrink-0"
-          >
-            <path
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            ></path>
-          </svg>
-          <p class="text-sm leading-relaxed">Thankful for the fresh morning air during my walk.</p>
-        </div>
-        <div class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-heart w-4 h-4 text-primary mt-0.5 flex-shrink-0"
-          >
-            <path
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            ></path>
-          </svg>
-          <p class="text-sm leading-relaxed">I cherish the quiet moments of reflection.</p>
-        </div>
-        <div class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-heart w-4 h-4 text-primary mt-0.5 flex-shrink-0"
-          >
-            <path
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            ></path>
-          </svg>
-          <p class="text-sm leading-relaxed">
-            Appreciative of the supportive messages from friends.
-          </p>
-        </div>
-        <div class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-heart w-4 h-4 text-primary mt-0.5 flex-shrink-0"
-          >
-            <path
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            ></path>
-          </svg>
-          <p class="text-sm leading-relaxed">
-            I'm grateful for the opportunity to learn something new.
-          </p>
+          <p class="text-sm leading-relaxed">{{ reflection }}</p>
         </div>
       </div>
+      <p v-else class="text-sm text-muted-foreground">No gratitude reflections available.</p>
     </div>
   </div>
 </template>
