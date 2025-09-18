@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconMessageCircle from '@/components/icons/IconMessageCircle.vue'
+
 defineProps<{
   summary: string
 }>()
@@ -13,20 +15,8 @@ defineProps<{
       class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 pb-3"
     >
       <div data-slot="card-title" class="font-semibold flex items-center gap-2 text-lg">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-message-circle w-5 h-5 text-primary"
-        >
-          <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg
-        >Your Day in Reflection (summary)
+        <IconMessageCircle class="w-5 h-5 text-primary" />
+        Your Day in Reflection (summary)
       </div>
     </div>
     <div data-slot="card-content" class="px-6">

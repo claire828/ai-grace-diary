@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import IconHeart from '@/components/icons/IconHeart.vue'
+import IconHeartStroke from './icons/IconHeartStroke.vue'
+
 defineProps<{
   reflections: string[]
 }>()
@@ -14,22 +17,8 @@ defineProps<{
       class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 pb-3"
     >
       <div data-slot="card-title" class="font-semibold flex items-center gap-2 text-lg">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-heart w-5 h-5 text-primary"
-        >
-          <path
-            d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-          ></path></svg
-        >Gratitude Reflections
+        <IconHeartStroke class="w-5 h-5 text-primary" />
+        Gratitude Reflections
       </div>
     </div>
     <div data-slot="card-content" class="px-6">
@@ -39,22 +28,7 @@ defineProps<{
           :key="reflection"
           class="flex items-start gap-3 p-3 rounded-lg bg-card border border-border"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-heart w-4 h-4 text-primary mt-0.5 flex-shrink-0"
-          >
-            <path
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            ></path>
-          </svg>
+          <IconHeart class="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
           <p class="text-sm leading-relaxed">{{ reflection }}</p>
         </div>
       </div>
