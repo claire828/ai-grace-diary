@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { useDiary } from '@/composables/useDiary'
 import { formatEuropean } from '@/utils'
-import { onMounted } from 'vue'
 import DiaryRow from './DiaryRow.vue'
 
 const { diaries, actions } = useDiary()
-
-onMounted(() => {
-  actions.fetchDiaries()
-})
+actions.fetchDiaries()
 </script>
 
 <template>
@@ -33,6 +29,7 @@ onMounted(() => {
         :mood="diary.mood"
         @delete="actions.deleteDiary(diary.id)"
         @analyze="actions.analyzeDiary(diary.id)"
+        @view-analysis="$router.push(`/diary-analysis/${diary.id}`)"
       />
     </div>
   </section>

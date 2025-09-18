@@ -64,10 +64,10 @@ function handleAction(event: Event, type: DiaryActionType) {
         <IconTrash />
       </button>
 
-      <!-- View Detail Button -->
+      <!-- View Analysis Button -->
       <button
         v-if="isAnalyzed"
-        @click.stop
+        @click="handleAction($event, 'viewAnalysis')"
         class="p-1 hover:scale-110 transition-transform text-gray-500 hover:text-blue-500 cursor-pointer"
         aria-label="View analysis detail"
       >

@@ -1,6 +1,6 @@
 import type { DiaryRemoteModel } from '@/models'
 import type { DiaryStatus } from '@/types'
-import { createResource, postJSON } from '@/utils'
+import { createResource, getJSON, postJSON } from '@/utils'
 import { catchError, defer, map, Subject, takeUntil, tap } from 'rxjs'
 import type { AjaxResponse } from 'rxjs/ajax'
 import { onUnmounted, readonly, ref } from 'vue'
@@ -51,6 +51,16 @@ export function useDiary() {
       }),
     )
 
+  const fetchDiaryAnalysisStream$ = (id: number | string) =>
+    getJSON<{ data: unknown }>(`${url}/${id}/analysis`).pipe(
+      map((res) => res.data),
+      takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Fetch diary analysis request failed:', err)
+        throw err
+      }),
+    )
+
   // --- Helper functions ---
   const updateStatus = (id: number, toStatus: DiaryStatus) => {
     const diary = diaries.value.find((d) => d.id === id)
@@ -94,6 +104,8 @@ export function useDiary() {
           }),
         )
         .subscribe(),
+
+    fetchDiaryAnalysis: (id: number) => defer(() => fetchDiaryAnalysisStream$(id)).subscribe(),
   }
 
   onUnmounted(() => {
@@ -114,6 +126,7 @@ export function useDiary() {
       addDiary$: addDiaryStream$,
       deleteDiary$: deleteDiaryStream$,
       analyzeDiary$: analyzeDiaryStream$,
+      fetchDiaryAnalysis$: fetchDiaryAnalysisStream$,
     },
   }
 }
