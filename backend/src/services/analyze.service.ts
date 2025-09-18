@@ -111,6 +111,18 @@ export class AnalyzeService {
       throw error;
     }
   }
+
+  public async deleteDiaryAnalysis(diaryId: number): Promise<void> {
+    const query = 'DELETE FROM diary_analysis WHERE diary_id = $1';
+
+    try {
+      const result = await client.query(query, [diaryId]);
+      console.log(`Deleted ${result.rowCount} analysis records for diary ID: ${diaryId}`);
+    } catch (error) {
+      console.error('Error deleting analysis from database:', error);
+      throw error;
+    }
+  }
 }
 
 export const analyzeService = new AnalyzeService();
