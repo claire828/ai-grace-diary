@@ -1,10 +1,10 @@
-# 🌟 AI Language Diary
+# 🌟 AI Grace Diary
 
-> A modern diary application powered by AI that helps you understand your emotional journey through intelligent analysis and gentle insights.
+> A modern Node.js + Express + PostgreSQL + Vue 3 + RxJS diary application powered by AI that helps you understand your emotional journey through intelligent analysis and gentle insights.
 
 ## ✨ Overview
 
-AI Language Diary is a full-stack web application that combines personal journaling with AI-powered emotional analysis. Write your daily thoughts and receive personalized insights about your emotional patterns, stress levels, and mental well-being from Google's Gemini AI.
+AI Grace Diary is a full-stack web application that combines personal journaling with AI-powered emotional analysis. Write your daily thoughts and receive personalized insights about your emotional patterns, stress levels, and mental well-being from Google's Gemini AI.
 
 ## 🚀 Features
 
@@ -48,7 +48,7 @@ AI Language Diary is a full-stack web application that combines personal journal
 ## 📁 Project Structure
 
 ```
-ai-language-diary/
+ai-grace-diary/
 ├── frontend/                 # Vue.js frontend application
 │   ├── src/
 │   │   ├── components/       # Reusable UI components
@@ -110,8 +110,8 @@ The AI analysis provides comprehensive insights:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/claire828/ai-language-diary.git
-   cd ai-language-diary
+   git clone https://github.com/claire828/ai-grace-diary.git
+   cd ai-grace-diary
    ```
 
 2. **Backend Setup**
