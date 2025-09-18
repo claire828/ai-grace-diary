@@ -57,6 +57,7 @@ function handleAction(event: Event, type: DiaryActionType) {
     <section class="flex items-center space-x-2 flex-shrink-0">
       <!-- Delete Button -->
       <button
+        :disabled="isAnalyzing"
         @click="handleAction($event, 'delete')"
         class="p-1 hover:scale-110 transition-transform text-gray-500 hover:text-red-500 cursor-pointer"
         aria-label="Delete diary"

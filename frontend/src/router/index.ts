@@ -1,4 +1,4 @@
-import DiaryInput from '@/components/DiaryInput.vue'
+import DiaryWriter from '@/components/DiaryWriter.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: DiaryInput,
+      component: DiaryWriter,
     },
     {
       path: '/history',
@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/diary-analysis/:id',
       name: 'diary-analysis',
-      component: () => import('../components/DiaryReport.vue'),
+      component: () => import('../components/DiaryAnalysis.vue'),
     },
   ],
 })
