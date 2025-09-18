@@ -1,4 +1,4 @@
-import type { DiaryRemoteModel } from '@/models'
+import type { DiaryAnalysisRemote, DiaryRemoteModel } from '@/models'
 import type { DiaryStatus } from '@/types'
 import { createResource, getJSON, postJSON } from '@/utils'
 import { catchError, defer, map, Subject, takeUntil, tap } from 'rxjs'
@@ -52,7 +52,7 @@ export function useDiary() {
     )
 
   const fetchDiaryAnalysisStream$ = (id: number | string) =>
-    getJSON<{ data: unknown }>(`${url}/${id}/analysis`).pipe(
+    getJSON<{ data: DiaryAnalysisRemote }>(`${url}/${id}/analysis`).pipe(
       map((res) => res.data),
       takeUntil(destroy$),
       catchError((err) => {
