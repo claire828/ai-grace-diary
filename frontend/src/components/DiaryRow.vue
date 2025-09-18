@@ -2,7 +2,6 @@
 import type { DiaryActionType, DiaryStatus, MoodStatus } from '@/types/diary.type'
 import { computed } from 'vue'
 import IconAnalyze from './icons/IconAnalyze.vue'
-import IconChevronRight from './icons/IconChevronRight.vue'
 import IconTrash from './icons/IconTrash.vue'
 import IconViewDetail from './icons/IconViewDetail.vue'
 
@@ -21,13 +20,6 @@ const emit = defineEmits<{
 const showAnalyzeButton = computed(() => ['draft', 'analyzing'].includes(props.status))
 const isAnalyzing = computed(() => props.status === 'analyzing')
 const isAnalyzed = computed(() => props.status === 'analyzed')
-const shouldShowMood = computed(() => props.mood !== 'Waiting for Analysis')
-
-const moodClasses = computed(() => ({
-  'bg-green-100 text-green-800': props.mood === 'Positive',
-  'bg-yellow-100 text-yellow-800': props.mood === 'Neutral',
-  'bg-red-100 text-red-800': props.mood === 'Negative',
-}))
 
 const buttonClasses = computed(() =>
   isAnalyzing.value
@@ -86,14 +78,6 @@ function handleAction(event: Event, type: DiaryActionType) {
         <IconAnalyze v-if="!isAnalyzing" class="w-4 h-4 mr-1" />
         {{ isAnalyzing ? 'Analyzing...' : 'Analyze' }}
       </button>
-
-      <!-- Mood Badge and Chevron -->
-      <template v-if="shouldShowMood">
-        <span :class="moodClasses" class="px-2 py-1 text-xs rounded-full font-medium">
-          {{ mood }}
-        </span>
-        <IconChevronRight class="w-4 h-4 text-gray-400" />
-      </template>
     </section>
   </div>
 </template>

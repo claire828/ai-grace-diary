@@ -1,123 +1,203 @@
 tags:
-- name: users
-  description: users API
+  - name: diary
+    description: diary API
 
 paths:
-# [GET] users
-  /users:
-    get:
-      tags:
-      - users
-      summary: Find All Users
-      responses:
-        200:
-          description: 'OK'
-        500:
-          description: 'Server Error'
-
-# [POST] users
+  # [POST] diaries
+  /diaries:
     post:
       tags:
-      - users
-      summary: Add User
+        - diary
+      summary: Create a new diary
       parameters:
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        - name: body
+          in: body
+          description: diary content
+          required: true
+          schema:
+            $ref: '#/definitions/CreateDiary'
       responses:
         201:
           description: 'Created'
         400:
           description: 'Bad Request'
-        409:
-          description: 'Conflict'
         500:
           description: 'Server Error'
 
-# [GET] users/id
-  /users/{id}:
+    # [GET] diaries
     get:
       tags:
-      - users
-      summary: Find User By Id
-      parameters:
-      - name: id
-        in: path
-        description: User Id
-        required: true
-        type: integer
+        - diary
+      summary: Get all diaries
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
         500:
           description: 'Server Error'
 
-# [PUT] users/id
-    put:
+  # [GET] diaries/id
+  /diaries/{id}:
+    get:
       tags:
-      - users
-      summary: Update User By Id
+        - diary
+      summary: Get diary by ID
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-        type: integer
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        - name: id
+          in: path
+          description: Diary ID
+          required: true
+          type: integer
       responses:
         200:
           description: 'OK'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
+        404:
+          description: 'Diary not found'
         500:
           description: 'Server Error'
 
-# [DELETE] users/id
+    # [DELETE] diaries/id
     delete:
       tags:
-      - users
-      summary: Delete User By Id
+        - diary
+      summary: Delete diary by ID
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-        type: integer
+        - name: id
+          in: path
+          description: Diary ID
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'Deleted'
+        404:
+          description: 'Diary not found'
+        500:
+          description: 'Server Error'
+
+  # [POST] diaries/id/analyze
+  /diaries/{id}/analyze:
+    post:
+      tags:
+        - diary
+      summary: Analyze diary content
+      parameters:
+        - name: id
+          in: path
+          description: Diary ID
+          required: true
+          type: integer
+      responses:
+        200:
+          description: 'Analyzed'
+        404:
+          description: 'Diary not found'
+        500:
+          description: 'Server Error'
+
+  # [GET] diaries/id/analysis
+  /diaries/{id}/analysis:
+    get:
+      tags:
+        - diary
+      summary: Get diary analysis
+      parameters:
+        - name: id
+          in: path
+          description: Diary ID
+          required: true
+          type: integer
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
+        404:
+          description: 'Analysis not found'
         500:
           description: 'Server Error'
 
 # definitions
 definitions:
-  users:
+  CreateDiary:
     type: object
     required:
-        - email
-        - password
+      - content
     properties:
-      email:
+      content:
         type: string
-        description: user Email
-      password:
+        description: diary content
+
+  Diary:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: diary ID
+      content:
         type: string
-        description: user Password
+        description: diary content
+      created_at:
+        type: string
+        format: date-time
+        description: creation timestamp
+      status:
+        type: string
+        enum: [draft, analyzing, analyzed]
+        description: diary status
+
+  DiaryAnalysis:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: analysis ID
+      diary_id:
+        type: integer
+        description: diary ID
+      stress_score:
+        type: integer
+        minimum: 1
+        maximum: 5
+        description: stress level score
+      stress_explanation:
+        type: string
+        description: stress level explanation
+      emotion_category:
+        type: string
+        description: emotional category
+      emotion_words:
+        type: array
+        items:
+          type: string
+        description: emotion words
+      emotion_intensity:
+        type: string
+        description: emotion intensity level
+      gratitude:
+        type: array
+        items:
+          type: string
+        description: gratitude list
+      themes:
+        type: array
+        items:
+          type: string
+        description: recurring themes
+      positive_negative_ratio:
+        type: string
+        description: positive/negative ratio
+      summary:
+        type: string
+        description: diary summary
+      feedback:
+        type: string
+        description: AI feedback
+      model_version:
+        type: string
+        description: AI model version
+      created_at:
+        type: string
+        format: date-time
+        description: analysis creation timestamp
 
 schemes:
- - https
- - http
+  - https
+  - http
