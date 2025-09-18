@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { DiaryActionType, DiaryStatus, MoodStatus } from '@/types/diary.type'
-import { computed, defineEmits, defineProps } from 'vue'
+import { computed } from 'vue'
+import IconAnalyze from './icons/IconAnalyze.vue'
 import IconChevronRight from './icons/IconChevronRight.vue'
 import IconTrash from './icons/IconTrash.vue'
+import IconViewDetail from './icons/IconViewDetail.vue'
+
 const props = defineProps<{
   date: string
   content: string
@@ -14,8 +17,23 @@ const emit = defineEmits<{
   (e: DiaryActionType): void
 }>()
 
-const canAnalyzed = computed(() => props.status === 'draft')
-const inAnalyzing = computed(() => props.status === 'analyzing')
+// Computed properties
+const showAnalyzeButton = computed(() => ['draft', 'analyzing'].includes(props.status))
+const isAnalyzing = computed(() => props.status === 'analyzing')
+const isAnalyzed = computed(() => props.status === 'analyzed')
+const shouldShowMood = computed(() => props.mood !== 'Waiting for Analysis')
+
+const moodClasses = computed(() => ({
+  'bg-green-100 text-green-800': props.mood === 'Positive',
+  'bg-yellow-100 text-yellow-800': props.mood === 'Neutral',
+  'bg-red-100 text-red-800': props.mood === 'Negative',
+}))
+
+const buttonClasses = computed(() =>
+  isAnalyzing.value
+    ? 'bg-amber-600 cursor-not-allowed'
+    : 'cursor-pointer bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 hover:scale-105',
+)
 
 function handleAction(event: Event, type: DiaryActionType) {
   event.stopPropagation()
@@ -25,57 +43,55 @@ function handleAction(event: Event, type: DiaryActionType) {
 
 <template>
   <div
-    class="flex flex-col gap-2 md:flex-row items-start md:items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer"
+    class="flex flex-col gap-2 md:flex-row items-start md:items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
   >
-    <section>
-      <h3 class="font-medium text-gray-900">{{ props.date }}</h3>
+    <!-- Content Section -->
+    <section class="flex-1 min-w-0">
+      <h3 class="font-medium text-gray-900 mb-1">{{ date }}</h3>
       <p class="text-sm text-gray-600 truncate max-w-xs md:max-w-lg lg:max-w-3xl">
-        {{ props.content }}
+        {{ content }}
       </p>
     </section>
 
-    <!-- Buttons Area-->
-    <section class="flex items-center space-x-2">
-      <IconTrash
-        class="hover:scale-110 transition-transform"
+    <!-- Actions Section -->
+    <section class="flex items-center space-x-2 flex-shrink-0">
+      <!-- Delete Button -->
+      <button
         @click="handleAction($event, 'delete')"
+        class="p-1 hover:scale-110 transition-transform text-gray-500 hover:text-red-500 cursor-pointer"
         aria-label="Delete diary"
-      />
+      >
+        <IconTrash />
+      </button>
 
-      <!-- <IconEditable 
-        class="hover:scale-110 transition-transform"
-        @click="handleAction($event, 'edit')"
-        aria-label="Edit diary"
-      /> -->
+      <!-- View Detail Button -->
+      <button
+        v-if="isAnalyzed"
+        @click.stop
+        class="p-1 hover:scale-110 transition-transform text-gray-500 hover:text-blue-500 cursor-pointer"
+        aria-label="View analysis detail"
+      >
+        <IconViewDetail />
+      </button>
 
-      <div v-if="canAnalyzed" class="flex space-x-2">
-        <button
-          @click="handleAction($event, 'analyze')"
-          class="flex cursor-pointer items-center px-3 py-1 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl hover:from-purple-600 hover:to-indigo-600 transition-all transform hover:scale-105 shadow-lg"
-        >
-          <IconAnalyze />
-          Analyze
-        </button>
-      </div>
+      <!-- Analyze Button -->
+      <button
+        v-if="showAnalyzeButton"
+        @click="handleAction($event, 'analyze')"
+        :disabled="isAnalyzing"
+        :class="buttonClasses"
+        class="flex items-center px-3 py-1 text-white text-sm rounded-2xl shadow-lg transition-all transform"
+      >
+        <IconAnalyze v-if="!isAnalyzing" class="w-4 h-4 mr-1" />
+        {{ isAnalyzing ? 'Analyzing...' : 'Analyze' }}
+      </button>
 
-      <div v-if="inAnalyzing" class="flex space-x-2">
-        <div class="flex items-center bg-amber-600 px-3 py-1 text-white rounded-2xl shadow-lg">
-          ...analyzing
-        </div>
-      </div>
-
-      <template v-if="props.mood !== 'Waiting for Analysis'">
-        <span
-          class="px-2 py-1 text-xs rounded-full"
-          :class="{
-            'bg-green-100 text-green-800': props.mood === 'Positive',
-            'bg-yellow-100 text-yellow-800': props.mood === 'Neutral',
-            'bg-red-100 text-red-800': props.mood === 'Negative',
-          }"
-        >
-          {{ props.mood }}
+      <!-- Mood Badge and Chevron -->
+      <template v-if="shouldShowMood">
+        <span :class="moodClasses" class="px-2 py-1 text-xs rounded-full font-medium">
+          {{ mood }}
         </span>
-        <IconChevronRight />
+        <IconChevronRight class="w-4 h-4 text-gray-400" />
       </template>
     </section>
   </div>

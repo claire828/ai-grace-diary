@@ -44,14 +44,14 @@ export class AnalyzeService {
       analysis.stressLevel.score,
       analysis.stressLevel.explanation,
       analysis.emotionalState.category,
-      analysis.emotionalState.moodWords, // PostgreSQL array
+      analysis.emotionalState.moodWords,
       analysis.emotionalState.intensity,
-      analysis.gratitude, // PostgreSQL array
-      analysis.themes, // PostgreSQL array
+      analysis.gratitude,
+      analysis.themes,
       analysis.positiveNegativeRatio,
       analysis.summary,
       analysis.feedback,
-      'gemini-1.5', // model version
+      'gemini-1.5',
     ];
 
     try {
@@ -113,5 +113,4 @@ export class AnalyzeService {
   }
 }
 
-// Export singleton instance
 export const analyzeService = new AnalyzeService();

@@ -55,4 +55,20 @@ export class DiaryController {
       next(error);
     }
   };
+
+  getDiaryAnalysis = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const diaryId = Number(req.params.id);
+      const analysis = await analyzeService.getDiaryAnalysis(diaryId);
+
+      if (!analysis) {
+        res.status(404).json({ error: 'Analysis not found for this diary' });
+        return;
+      }
+
+      res.status(200).json({ data: analysis, message: 'analysis retrieved' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

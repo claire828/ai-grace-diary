@@ -9,5 +9,6 @@ router.get('/diaries/today', diaryController.getTodayDiary);
 router.delete('/diaries/:id', diaryController.deleteDiary);
 router.get('/diaries', diaryController.getAllDiaries);
 router.post('/diaries/:id/analyze', diaryController.analyzeDiary);
+router.get('/diaries/:id/analysis', diaryController.getDiaryAnalysis);
 
 export default { router };

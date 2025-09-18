@@ -24,7 +24,3 @@
     </g>
   </svg>
 </template>
-
-<script setup lang="ts">
-// Pure icon, no props or logic
-</script>
