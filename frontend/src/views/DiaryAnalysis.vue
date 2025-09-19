@@ -1,4 +1,3 @@
-<!-- @ts-nocheck -->
 <script setup lang="ts">
 import DayReflection from '@/components/DayReflection.vue'
 import DiaryContent from '@/components/DiaryContent.vue'
