@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ConfirmDialog from '@/components/dialog/ConfirmDialog.vue'
 import DiaryInsightTip from '@/components/diary/DiaryInsightTip.vue'
 import { useDiary } from '@/composables/useDiary'
 import {
@@ -8,18 +9,17 @@ import {
   WORDS_MAX,
   WORDS_SUFFIX,
 } from '@/constants/diary.constants'
+import { dialogService } from '@/services/DialogService'
 import { useObservable } from '@vueuse/rxjs'
-import { useConfirm } from 'primevue/useconfirm'
-import { catchError, EMPTY, tap } from 'rxjs'
+import { catchError, EMPTY, filter, tap } from 'rxjs'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const { streams } = useDiary()
 const diaryRef = ref('')
-const confirm = useConfirm()
 const router = useRouter()
 
-function write() {
+function createDiary() {
   useObservable(
     streams.addDiary$(diaryRef.value).pipe(
       tap(() => router.push('/history')),
@@ -32,14 +32,21 @@ function write() {
 }
 
 function openConfirm() {
-  confirm.require({
-    message: 'Are you sure you want to submit this diary entry?',
-    header: 'Confirm Submission',
-    icon: 'pi pi-exclamation-triangle',
-    acceptLabel: 'Submit',
-    rejectLabel: 'Cancel',
-    accept: () => write(),
-  })
+  useObservable(
+    dialogService
+      .openDialog$(ConfirmDialog, {
+        title: 'Create Diary',
+        message: 'Are you sure you want to submit this diary entry?',
+      })
+      .pipe(
+        filter((result) => result === true),
+        tap(() => createDiary()),
+        catchError((err) => {
+          console.error('Dialog error:', err)
+          return EMPTY
+        }),
+      ),
+  )
 }
 </script>
 
@@ -74,7 +81,7 @@ function openConfirm() {
             :disabled="!diaryRef.length"
             class="px-6 py-3 text-gray-500 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
           >
-            'Save'
+            Save
           </button>
         </div>
       </div>

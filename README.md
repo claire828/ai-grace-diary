@@ -33,8 +33,6 @@ AI Grace Diary is a full-stack web application that combines personal journaling
 - **TypeScript** for type safety and better development experience
 - **Tailwind CSS** for modern, responsive styling
 - **RxJS** for reactive programming and stream-based data flow
-- **Vue Router** for client-side routing
-- **Vite** for fast development and building
 
 ### Backend
 
