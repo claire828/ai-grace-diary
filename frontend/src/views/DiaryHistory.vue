@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import DiaryRow from '@/components/DiaryRow.vue'
 import { useDiary } from '@/composables/useDiary'
 import { formatEuropean } from '@/utils'
-import DiaryRow from './DiaryRow.vue'
 
 const { diaries, actions } = useDiary()
 actions.fetchDiaries()

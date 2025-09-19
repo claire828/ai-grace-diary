@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DiaryInsightTip from '@/components/DiaryInsightTip.vue'
 import { useDiary } from '@/composables/useDiary'
 import {
   DIARY_DESCRIPTION,
@@ -12,7 +13,6 @@ import { useConfirm } from 'primevue/useconfirm'
 import { catchError, EMPTY, tap } from 'rxjs'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import DiaryInsightTip from './DiaryInsightTip.vue'
 
 const { streams } = useDiary()
 const diaryRef = ref('')

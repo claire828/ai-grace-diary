@@ -15,7 +15,17 @@ const { streams } = useDiary()
 const diary = useObservable(streams.fetchDiary$(diaryId.value), {
   initialValue: undefined,
 })
-
+const createdDate = computed(() =>
+  diary.value ? new Date(diary.value.created_at).toLocaleDateString() : '',
+)
+const createdTime = computed(() =>
+  diary.value
+    ? new Date(diary.value.created_at).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : '',
+)
 const isExpanded = ref(false)
 </script>
 
@@ -37,7 +47,7 @@ const isExpanded = ref(false)
         </div>
         <div class="flex items-center gap-2">
           <span class="text-sm text-muted-foreground" v-if="diary">
-            {{ new Date(diary.created_at).toLocaleDateString() }}
+            {{ createdDate }}
           </span>
           <IconChevronDown
             class="w-5 h-5 transition-transform duration-200"
@@ -57,11 +67,11 @@ const isExpanded = ref(false)
           <div class="flex items-center gap-4 text-sm text-muted-foreground">
             <div class="flex items-center gap-2">
               <IconCalendar class="w-4 h-4" />
-              <span>{{ new Date(diary.created_at).toLocaleDateString() }}</span>
+              <span>{{ createdDate }}</span>
             </div>
             <div class="flex items-center gap-2">
               <IconClock class="w-4 h-4" />
-              <span>{{ new Date(diary.created_at).toLocaleTimeString() }}</span>
+              <span>{{ createdTime }}</span>
             </div>
           </div>
           <div class="bg-accent/5 p-4 rounded-lg border border-accent/20 max-h-64 overflow-auto">

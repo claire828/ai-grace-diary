@@ -1,6 +1,6 @@
-import DiaryWriter from '@/components/DiaryWriter.vue'
+import DiaryWriter from '@/views/DiaryWriter.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -11,14 +11,12 @@ const router = createRouter({
     {
       path: '/history',
       name: 'history',
-      component: () => import('../components/DiaryHistory.vue'),
+      component: () => import('../views/DiaryHistory.vue'),
     },
     {
       path: '/diary-analysis/:id',
       name: 'diary-analysis',
-      component: () => import('../components/DiaryAnalysis.vue'),
+      component: () => import('../views/DiaryAnalysis.vue'),
     },
   ],
 })
-
-export default router

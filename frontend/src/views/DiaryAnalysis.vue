@@ -1,17 +1,17 @@
 <!-- @ts-nocheck -->
 <script setup lang="ts">
+import DayReflection from '@/components/DayReflection.vue'
+import DiaryContent from '@/components/DiaryContent.vue'
+import EmotionalBalance from '@/components/EmotionalBalance.vue'
+import EmotionalState from '@/components/EmotionalState.vue'
+import GentleGuidance from '@/components/GentleGuidance.vue'
+import GratitudeReflections from '@/components/GratitudeReflections.vue'
+import KeyThemes from '@/components/KeyThemes.vue'
+import StressLevel from '@/components/StressLevel.vue'
 import { useDiary } from '@/composables/useDiary'
 import { useObservable } from '@vueuse/rxjs'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import DayReflection from './DayReflection.vue'
-import DiaryContent from './DiaryContent.vue'
-import EmotionalBalance from './EmotionalBalance.vue'
-import EmotionalState from './EmotionalState.vue'
-import GentleGuidance from './GentleGuidance.vue'
-import GratitudeReflections from './GratitudeReflections.vue'
-import KeyThemes from './KeyThemes.vue'
-import StressLevel from './StressLevel.vue'
 
 const route = useRoute()
 const diaryId = computed(() => route.params.id as string)

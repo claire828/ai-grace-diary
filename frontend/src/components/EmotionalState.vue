@@ -40,10 +40,8 @@ const categoryColor = computed(() => {
         <div class="flex items-center gap-3">
           <span
             data-slot="badge"
-            :class="[
-              'inline-flex items-center justify-center rounded-md border text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] px-3 py-1',
-              categoryColor,
-            ]"
+            class="'inline-flex items-center justify-center rounded-md border text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] px-3 py-1"
+            :class="categoryColor"
             >{{ state.category }}</span
           >
           <div class="flex items-center gap-2 text-sm text-muted-foreground">
