@@ -132,12 +132,12 @@ export function useDiary() {
 
     // --- Raw streams for advanced usage with useObservable ---
     streams: {
-      fetchDiaries$: fetchDiariesStream$,
-      fetchDiary$: fetchDiaryStream$,
-      addDiary$: addDiaryStream$,
-      deleteDiary$: deleteDiaryStream$,
-      analyzeDiary$: analyzeDiaryStream$,
-      fetchDiaryAnalysis$: fetchDiaryAnalysisStream$,
+      fetchDiariesStream$,
+      fetchDiaryStream$,
+      addDiaryStream$,
+      deleteDiaryStream$,
+      analyzeDiaryStream$,
+      fetchDiaryAnalysisStream$,
     },
   }
 }

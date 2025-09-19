@@ -21,7 +21,7 @@ const router = useRouter()
 
 function createDiary() {
   useObservable(
-    streams.addDiary$(diaryRef.value).pipe(
+    streams.addDiaryStream$(diaryRef.value).pipe(
       tap(() => router.push('/history')),
       catchError((err) => {
         console.error('Failed to submit diary:', err)

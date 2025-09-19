@@ -12,7 +12,7 @@ const route = useRoute()
 const diaryId = computed(() => route.params.id as string)
 const { streams } = useDiary()
 
-const diary = useObservable(streams.fetchDiary$(diaryId.value), {
+const diary = useObservable(streams.fetchDiaryStream$(diaryId.value), {
   initialValue: undefined,
 })
 const createdDate = computed(() =>
