@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { dialogService, type DialogState } from '@/services/DialogService'
+import type { DialogState } from '@/models/dialog.model'
+import { dialogService } from '@/services/DialogService'
 import { useObservable } from '@vueuse/rxjs'
 
 const initialValue: DialogState = {

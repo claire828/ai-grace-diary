@@ -1,16 +1,6 @@
+import type { DialogState } from '@/models/dialog.model'
 import { Observable, Subject, take } from 'rxjs'
 import type { Component } from 'vue'
-
-export interface DialogRequest {
-  component: Component
-  props: Record<string, unknown>
-}
-
-export interface DialogState {
-  isOpen: boolean
-  activeDialog: Component | null
-  dialogProps: Record<string, unknown>
-}
 
 class DialogService {
   private dialogStateSubject = new Subject<DialogState>()
