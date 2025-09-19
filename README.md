@@ -51,6 +51,9 @@ ai-grace-diary/
 │   ├── src/
 │   │   ├── components/       # Reusable UI components
 │   │   │   ├── icons/        # Custom SVG icon components (14 icons)
+│   │   │   ├── dialog/       # Dialog components
+│   │   │   │   ├── ConfirmDialog.vue         # Confirmation dialog
+│   │   │   │   └── DialogWrapper.vue         # Global dialog renderer
 │   │   │   └── diary/        # All diary-related smart components
 │   │   │        ├── DiaryContent.vue         # Accordion-style diary viewer
 │   │   │        ├── DiaryRow.vue             # Diary list item component
@@ -69,6 +72,9 @@ ai-grace-diary/
 │   │   ├── composables/     # Reactive business logic
 │   │   │   └── useDiary.ts  # Diary operations with RxJS
 │   │   ├── models/          # TypeScript data models
+│   │   │   └── dialog.model.ts      # Dialog-related interfaces
+│   │   ├── services/        # Business logic services
+│   │   │   └── dialogService.ts     # Dialog management with RxJS
 │   │   ├── router/          # Vue Router configuration
 │   │   ├── types/           # TypeScript type definitions
 │   │   └── utils/           # Utility functions and API helpers

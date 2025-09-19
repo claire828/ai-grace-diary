@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DialogWrapper from '@/components/DialogWrapper.vue'
+import DialogWrapper from '@/components/dialog/DialogWrapper.vue'
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 

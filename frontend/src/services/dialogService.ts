@@ -12,8 +12,17 @@ class DialogService {
    * @param component - Vue dialog component
    * @param props - Component props
    * @returns Observable that emits close payload
-   * @example const result = useObservable(dialogService.openDialog$(ConfirmDialog$, props)))
-   * @example dialogService.openDialog$(ConfirmDialog$, props).subscribe(result => ...)
+   * @example
+   * // Method 1: Using useObservable (Recommended for Vue Composition API)
+   * // This creates a reactive ref that updates when the dialog closes
+   * const result = useObservable(dialogService.openDialog$(ConfirmDialog, props))
+   *
+   * @example
+   * // Method 2: Using direct Observable subscription
+   * // This gives you immediate access to the result via callback
+   * dialogService.openDialog$(ConfirmDialog, props).subscribe(result => {
+   *   console.log('Dialog closed with result:', result)
+   * })
    */
   openDialog$(component: Component, props: Record<string, unknown> = {}): Observable<unknown> {
     this.dialogStateSubject.next({
