@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StressLevel } from '@/models'
 import { computed } from 'vue'
-import IconTrendingUp from './icons/IconTrendingUp.vue'
+import IconTrendingUp from '@/components/icons/IconTrendingUp.vue'
 
 const props = defineProps<{
   level: StressLevel

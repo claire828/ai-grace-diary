@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import IconCalendar from '@/components/icons/IconCalendar.vue'
+import IconChevronDown from '@/components/icons/IconChevronDown.vue'
+import IconClock from '@/components/icons/IconClock.vue'
+import IconViewDetail from '@/components/icons/IconViewDetail.vue'
 import { useDiary } from '@/composables/useDiary'
 import { useObservable } from '@vueuse/rxjs'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import IconCalendar from './icons/IconCalendar.vue'
-import IconChevronDown from './icons/IconChevronDown.vue'
-import IconClock from './icons/IconClock.vue'
-import IconViewDetail from './icons/IconViewDetail.vue'
 
 const route = useRoute()
 const diaryId = computed(() => route.params.id as string)

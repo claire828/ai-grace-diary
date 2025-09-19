@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconHeart from '@/components/icons/IconHeart.vue'
-import IconHeartStroke from './icons/IconHeartStroke.vue'
+import IconHeartStroke from '@/components/icons/IconHeartStroke.vue'
 
 defineProps<{
   reflections: string[]

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DiaryInsightTip from '@/components/DiaryInsightTip.vue'
+import DiaryInsightTip from '@/components/diary/DiaryInsightTip.vue'
 import { useDiary } from '@/composables/useDiary'
 import {
   DIARY_DESCRIPTION,

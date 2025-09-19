@@ -52,20 +52,28 @@ ai-grace-diary/
 ├── frontend/                 # Vue.js frontend application
 │   ├── src/
 │   │   ├── components/       # Reusable UI components
-│   │   │   ├── icons/       # Custom SVG icon components
+│   │   │   ├── icons/        # Custom SVG icon components (14 icons)
+│   │   │   └── diary/        # All diary-related smart components
+│   │   │        ├── DiaryContent.vue         # Accordion-style diary viewer
+│   │   │        ├── DiaryRow.vue             # Diary list item component
+│   │   │        ├── DiaryInsightTip.vue      # Writing guidance tips
+│   │   │        ├── StressLevel.vue          # Stress analysis card
+│   │   │        ├── EmotionalState.vue       # Emotion analysis card
+│   │   │        ├── EmotionalBalance.vue     # Positive/negative ratio card
+│   │   │        ├── KeyThemes.vue            # Theme identification card
+│   │   │        ├── GratitudeReflections.vue # Gratitude extraction card
+│   │   │        ├── DayReflection.vue        # Daily summary card
+│   │   │        └── GentleGuidance.vue       # AI feedback card
+│   │   ├── views/           # Page-level components
 │   │   │   ├── DiaryWriter.vue      # Diary creation interface
 │   │   │   ├── DiaryAnalysis.vue    # Analysis results display
-│   │   │   ├── DiaryContent.vue     # Accordion-style diary viewer
-│   │   │   ├── StressLevel.vue      # Stress analysis card
-│   │   │   ├── EmotionalState.vue   # Emotion analysis card
-│   │   │   └── ...          # Other analysis components
+│   │   │   └── DiaryHistory.vue     # Diary history listing
 │   │   ├── composables/     # Reactive business logic
 │   │   │   └── useDiary.ts  # Diary operations with RxJS
 │   │   ├── models/          # TypeScript data models
 │   │   ├── router/          # Vue Router configuration
 │   │   ├── types/           # TypeScript type definitions
-│   │   ├── utils/           # Utility functions and API helpers
-│   │   └── views/           # Page-level components
+│   │   └── utils/           # Utility functions and API helpers
 │   └── ...
 ├── backend/                  # Express.js backend API
 │   ├── src/

@@ -13,5 +13,5 @@
 </template>
 
 <script setup lang="ts">
-import IconLightbulb from './icons/IconLightbulb.vue'
+import IconLightbulb from '@/components/icons/IconLightbulb.vue'
 </script>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import IconAnalyze from '@/components/icons/IconAnalyze.vue'
+import IconTrash from '@/components/icons/IconTrash.vue'
+import IconViewDetail from '@/components/icons/IconViewDetail.vue'
 import type { DiaryActionType, DiaryStatus, MoodStatus } from '@/types/diary.type'
 import { computed } from 'vue'
-import IconAnalyze from './icons/IconAnalyze.vue'
-import IconTrash from './icons/IconTrash.vue'
-import IconViewDetail from './icons/IconViewDetail.vue'
 
 const props = defineProps<{
   date: string
