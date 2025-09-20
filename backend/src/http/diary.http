@@ -7,12 +7,16 @@ POST {{ baseURL }}/diaries
 Content-Type: application/json
 
 {
-    "content": "今天是一个美好的日子，我感到非常开心和满足。早上起床后阳光明媚，让我的心情也变得很好。工作上也进展顺利，完成了几个重要的任务。晚上和朋友聊天，分享了彼此的近况，感觉很温暖。"
+    "content": "It is a sunny day. I went for a walk in the park and enjoyed the fresh air. I feel grateful for the little things in life."
 }
 
 ###
 # Get all diaries
 GET {{ baseURL }}/diaries
+
+###
+# Get diary insights and trends
+GET {{ baseURL }}/diaries/insights
 
 ###
 # Get diary by ID
@@ -36,7 +40,7 @@ POST {{ baseURL }}/diaries
 Content-Type: application/json
 
 {
-    "content": "今天工作压力比较大，遇到了一些挫折。项目进度不如预期，同事之间也有一些分歧。不过我尝试保持积极的心态，相信明天会更好。晚上看了一部喜剧电影来放松心情。"
+    "content": "Today I faced some challenges at work. The project is not progressing as expected, and there are some disagreements among colleagues. However, I try to maintain a positive mindset, believing that tomorrow will be better. In the evening, I watched a comedy movie to relax."
 }
 
 ###
@@ -45,5 +49,5 @@ POST {{ baseURL }}/diaries
 Content-Type: application/json
 
 {
-    "content": "今天我要感谢很多事情：感谢家人的支持，感谢朋友的陪伴，感谢工作给我的成长机会。即使遇到困难，我也要保持感恩的心。生活中有太多美好的事物值得珍惜。"
+    "content": "Today I want to express my gratitude for many things: the support of my family, the companionship of my friends, and the growth opportunities my work has given me. Even when faced with difficulties, I strive to maintain a grateful heart. There are so many beautiful things in life worth cherishing."
 }
