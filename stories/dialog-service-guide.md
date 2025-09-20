@@ -94,7 +94,7 @@ frontend/src/
 
 ```typescript
 // In any Vue component
-import { dialogService } from '@/services/DialogService';
+import { dialogService } from '@/services/dialog.service';
 import { useObservable } from '@vueuse/rxjs';
 import ConfirmDialog from '@/components/dialog/ConfirmDialog.vue';
 
@@ -108,7 +108,7 @@ function showConfirmDialog() {
 
 ```typescript
 // In any Vue component
-import { dialogService } from '@/services/DialogService';
+import { dialogService } from '@/services/dialog.service';
 import ConfirmDialog from '@/components/dialog/ConfirmDialog.vue';
 
 function showConfirmDialog() {

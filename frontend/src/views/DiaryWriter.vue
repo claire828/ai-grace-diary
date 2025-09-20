@@ -9,7 +9,7 @@ import {
   WORDS_MAX,
   WORDS_SUFFIX,
 } from '@/constants/diary.constants'
-import { dialogService } from '@/services/DialogService'
+import { dialogService } from '@/services/dialog.service'
 import { useObservable } from '@vueuse/rxjs'
 import { catchError, EMPTY, filter, tap } from 'rxjs'
 import { ref } from 'vue'

@@ -1,5 +1,5 @@
 import type { DiaryAnalysisRemote, DiaryRemoteModel } from '@/models'
-import type { DiaryStatus } from '@/types'
+import type { DiaryInsight, DiaryStatus } from '@/types'
 import { createResource, getJSON, postJSON } from '@/utils'
 import { catchError, defer, map, Subject, takeUntil, tap } from 'rxjs'
 import type { AjaxResponse } from 'rxjs/ajax'
@@ -71,6 +71,16 @@ export function useDiary() {
       }),
     )
 
+  const fetchInsightsStream$ = () =>
+    getJSON<{ data: DiaryInsight[] }>(`${url}/insights`).pipe(
+      map((res) => res.data),
+      takeUntil(destroy$),
+      catchError((err) => {
+        console.error('Fetch insights request failed:', err)
+        throw err
+      }),
+    )
+
   // --- Helper functions ---
   const updateStatus = (id: number, toStatus: DiaryStatus) => {
     const diary = diaries.value.find((d) => d.id === id)
@@ -116,6 +126,8 @@ export function useDiary() {
         .subscribe(),
 
     fetchDiaryAnalysis: (id: number) => defer(() => fetchDiaryAnalysisStream$(id)).subscribe(),
+
+    fetchInsights: () => defer(() => fetchInsightsStream$()).subscribe(),
   }
 
   onUnmounted(() => {
@@ -138,6 +150,7 @@ export function useDiary() {
       deleteDiaryStream$,
       analyzeDiaryStream$,
       fetchDiaryAnalysisStream$,
+      fetchInsightsStream$,
     },
   }
 }
