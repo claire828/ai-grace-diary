@@ -18,5 +18,10 @@ export const router = createRouter({
       name: 'diary-analysis',
       component: () => import('../views/DiaryAnalysis.vue'),
     },
+    {
+      path: '/insights',
+      name: 'insights',
+      component: () => import('../views/DiaryInsights.vue'),
+    },
   ],
 })

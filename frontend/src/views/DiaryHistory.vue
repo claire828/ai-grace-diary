@@ -2,9 +2,15 @@
 import DiaryRow from '@/components/diary/DiaryRow.vue'
 import { useDiary } from '@/composables/useDiary'
 import { formatEuropean } from '@/utils'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const { diaries, actions } = useDiary()
 actions.fetchDiaries()
+
+const handleViewAnalysis = (diaryId: number) => {
+  router.push(`/diary-analysis/${diaryId}`)
+}
 </script>
 
 <template>
@@ -29,7 +35,7 @@ actions.fetchDiaries()
         :mood="diary.mood"
         @delete="actions.deleteDiary(diary.id)"
         @analyze="actions.analyzeDiary(diary.id)"
-        @view-analysis="$router.push(`/diary-analysis/${diary.id}`)"
+        @view-analysis="handleViewAnalysis(diary.id)"
       />
     </div>
   </section>
