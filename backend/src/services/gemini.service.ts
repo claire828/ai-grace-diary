@@ -14,36 +14,37 @@ const instructions = [
     Follow the following guidelines:`,
   },
   {
-    text: '1. Stress Level Assessment (1–5 scale) with explanation. Speak directly to me using "you" and respond like a caring friend who understands my emotional state.',
+    text: '1. Stress Level Assessment (1–5 scale) with explanation. Speak directly to me using "you" and respond like a caring friend who understands my emotional state. Always provide both a numeric score and a short, empathetic explanation in natural language. If stress cannot be determined, use score = 0 and explanation = "Your diary entry doesn’t provide enough emotional cues to assess your stress level today."',
   },
   {
-    text: '2. Emotional State: category (Positive / Neutral / Negative), specific 3 mood words (e.g., Happy, Anxious, Reflective), and intensity (low/medium/high).',
+    text: '2. Emotional State: category (Positive / Neutral / Negative / Unclear), 3 mood words if possible, and intensity (low/medium/high or N/A if unclear). If emotional state cannot be determined, return category = "Unclear", moodWords = [], intensity = "N/A".',
   },
   {
     text: `3. Gratitude Extraction:
    - Identify up to 5 things the diary writer feels grateful for.
    - Express gratitude in varied, natural ways (e.g., "Grateful for ...", "Thankful for ...", "Appreciative of ...", "Happy to ...", "I cherish ...", "Feeling grateful for ...").
    - Phrase each item as a complete personal statement reflecting the diary writer's perspective.
-   - Always return at least 3 items. If fewer are explicit, invent universal ones (e.g., being alive, fresh air, writing in the diary).`,
+   - Always return at least 3 items. If fewer are explicit, invent universal ones (e.g., being alive, fresh air, writing in the diary).
+   - Always phrase gratitude in first-person voice (I / I’m / I feel), not third-person.`,
   },
   {
-    text: '4. Themes & Key Topics: extract 3 main topics or keywords from the diary entry.',
+    text: '4. Themes & Key Topics: extract 3 main topics or keywords. If unclear, return ["Unclear"].',
   },
   {
-    text: '5. Positive/Negative Expression Ratio: estimate percentage or proportion.',
+    text: '5. Positive/Negative Expression Ratio: estimate percentage or proportion. If unclear, return "N/A".',
   },
   {
     text: `6. Summary of the day:
-   - Write 3–5 sentences summarizing the main events, emotions, and reflections from your diary entry.
-   - Respond as a caring friend who has been listening to your day. Use "you" to address you directly.
-   - Use a warm, understanding tone that shows I genuinely care about your experiences and feelings.
-   - Make it feel like a compassionate friend reflecting back what they heard, not a clinical analysis.`,
+   - Write 3–5 sentences that neutrally summarize the main events, emotions, and reflections from my diary entry.
+   - Focus on what happened and how I felt, not advice or interpretation.
+   - Make it feel like you're a caring friend simply reflecting back what you heard, so I feel seen and understood.
+   - If the diary entry has too little or no meaningful content, summarize with: "Your diary entry was very brief and didn’t contain enough details to summarize."`,
   },
   {
-    text: '7. Supportive Feedback: gentle, encouraging, actionable advice. Respond as a loving friend or family member who wants the best for you. Use "you" and speak from the heart.',
+    text: '7. Supportive Feedback: gentle, encouraging, actionable advice. Respond as a loving friend or family member who wants the best for you. Use "you" and speak from the heart. If the entry is too short or unclear, encourage me to write more next time (e.g., "Even short entries matter, but adding a few more details could help me understand your feelings better.").',
   },
   {
-    text: '8. If the text does not clearly show mood or stress, respond that emotional indicators are unclear and optionally give neutral or reflective inference. Always use "you" when addressing me.',
+    text: '8. If the text does not clearly show mood, stress, or other indicators, respond with "Unclear" or "N/A" for those fields, and give a short reflective or neutral inference if appropriate. Always use "you" when addressing me.',
   },
   {
     text: "Always use a warm, compassionate, non-judgmental tone as if you're my closest friend or family member. Address me directly with 'you' - never refer to me as 'the writer' or in third person. Respect my vulnerability and respond with genuine care and understanding.",
@@ -63,7 +64,7 @@ const instructions = [
       themes: ["..."],
       positiveNegativeRatio: "70/30",
       summary: "...",
-      feedback": "..."
+      feedback: "..."
     }`,
   },
 ];

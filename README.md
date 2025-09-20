@@ -87,7 +87,8 @@ ai-grace-diary/
 │   │   │   ├── analyze.service.ts   # AI analysis orchestration
 │   │   │   └── gemini.service.ts    # Google Gemini AI integration
 │   │   ├── routes/          # API route definitions
-│   │   ├── interfaces/      # TypeScript interfaces
+│   │   ├── models/          # API response models and data structures
+│   │   ├── interfaces/      # Domain business logic interfaces
 │   │   ├── database/        # Database configuration and migrations
 │   │   │   └── init.sql     # PostgreSQL table schemas
 │   │   ├── middlewares/     # Express middleware
@@ -208,6 +209,7 @@ http://localhost:3000/api-docs
 
 - `POST /diaries` - Create a new diary entry
 - `GET /diaries` - Retrieve all diary entries
+- `GET /diaries/insights` - Get analytical insights and trends (past 30 days)
 - `GET /diaries/:id` - Get specific diary entry
 - `POST /diaries/:id/analyze` - Trigger AI analysis
 - `GET /diaries/:id/analysis` - Retrieve analysis results

@@ -78,4 +78,14 @@ export class DiaryController {
       next(error);
     }
   };
+
+  getDiaryInsights = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const insights = await analyzeService.getDiaryInsights();
+      res.status(200).json({ message: 'insights', data: insights });
+    } catch (error) {
+      console.log('error');
+      next(error);
+    }
+  };
 }

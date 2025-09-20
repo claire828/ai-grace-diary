@@ -1,5 +1,6 @@
 import { client } from '@/database';
-import type { DiaryAnalysis } from '@/interfaces/diary-analysis.interface';
+import type { DiaryAnalysis } from '@/models/analysis.model';
+import type { DiaryInsight } from '@/models/insights.model';
 import { diaryService } from './diary.service';
 import { geminiService } from './gemini.service';
 
@@ -120,6 +121,38 @@ export class AnalyzeService {
       console.log(`Deleted ${result.rowCount} analysis records for diary ID: ${diaryId}`);
     } catch (error) {
       console.error('Error deleting analysis from database:', error);
+      throw error;
+    }
+  }
+
+  public async getDiaryInsights(): Promise<DiaryInsight[]> {
+    const query = `
+      SELECT DATE(d.created_at) AS day,
+             ROUND(AVG(a.stress_score), 2) AS avg_stress_score,
+             COUNT(d.id) as diary_count,
+             COUNT(a.id) as analysis_count
+      From diary d 
+      Left Join diary_analysis a 
+        ON d.id = a.diary_id
+      WHERE d.created_at >= NOW() - INTERVAL '30 days'
+      GROUP BY DATE(d.created_at)
+      ORDER BY day
+    `;
+
+    try {
+      const result = await client.query(query);
+      console.log('===Insights chart data:', result.rows);
+
+      const data: DiaryInsight[] = result.rows.map(row => ({
+        day: row.day,
+        avg_stress_score: row.avg_stress_score ? parseFloat(row.avg_stress_score) : null,
+        diary_count: parseInt(row.diary_count),
+        analysis_count: parseInt(row.analysis_count),
+      }));
+
+      return data;
+    } catch (error) {
+      console.error('Error getting insights chart data:', error);
       throw error;
     }
   }

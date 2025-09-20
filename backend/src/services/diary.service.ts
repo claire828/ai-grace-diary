@@ -1,13 +1,6 @@
 import { client } from '@/database';
+import type { Diary, DiaryStatus } from '@/models/diary.model';
 import { analyzeService } from './analyze.service';
-
-export type DiaryStatus = 'draft' | 'analyzing' | 'analyzed';
-export interface Diary {
-  id?: number;
-  content: string;
-  created_at?: Date;
-  status: DiaryStatus;
-}
 
 export class DiaryService {
   public async createDiary(content: string): Promise<Diary> {
