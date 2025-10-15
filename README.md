@@ -4,7 +4,8 @@
 
 ## ✨ Overview
 
-AI Grace Diary is a full-stack web application that combines personal journaling with AI-powered emotional analysis. Write your daily thoughts and receive personalized insights about your emotional patterns, stress levels, and mental well-being from Google's Gemini AI.
+![AI Grace Diary Overview](./stories/overview.gif)
+AI Grace Diary is a full-stack web application that combines personal journal with AI-powered emotional analysis. Write your daily thoughts and receive personalized insights about your emotional patterns, stress levels, and mental well-being from Google's Gemini AI.
 
 ## 🚀 Features
 
@@ -17,7 +18,7 @@ AI Grace Diary is a full-stack web application that combines personal journaling
 - **Theme Identification**: Discovers recurring patterns and key topics in your writing
 - **Personalized Feedback**: Warm, caring responses that feel like advice from a close friend
 
-### 📊 Insights Dashboard
+### Insights Dashboard
 
 - **Visual Analysis Cards**: Beautiful, intuitive display of your emotional data
 - **Stress Level Tracking**: Monitor your stress patterns over time
@@ -215,14 +216,9 @@ http://localhost:3000/api-docs
 - `GET /diaries/:id/analysis` - Retrieve analysis results
 - `DELETE /diaries/:id` - Delete diary entry
 
-## 🧪 Testing
+## 📖 Additional References
 
-Use the provided HTTP test files for manual API testing:
-
-```bash
-# Backend directory contains diary.http
-# Use REST Client extension in VS Code to run tests
-```
+- [Dialog Service Guide](stories/dialog-service-guide.md): Detailed architecture and usage for the reactive dialog management system (Vue 3 + RxJS).
 
 ## 🎨 Design Philosophy
 
